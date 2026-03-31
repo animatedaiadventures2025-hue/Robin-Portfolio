@@ -2,12 +2,11 @@
 // Nomad Gear — Main App Logic
 // ============================================
 
-// Render star rating
+// Render star rating — shows filled stars based on floor, numeric always visible
 function renderStars(rating) {
   const full = Math.floor(rating);
-  const half = rating % 1 >= 0.5 ? 1 : 0;
-  const empty = 5 - full - half;
-  return '★'.repeat(full) + (half ? '½' : '') + '☆'.repeat(empty);
+  const empty = 5 - full;
+  return '★'.repeat(full) + '☆'.repeat(empty);
 }
 
 // Render a single product card

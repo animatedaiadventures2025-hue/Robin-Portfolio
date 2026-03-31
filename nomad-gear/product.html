@@ -127,6 +127,13 @@
   <script src="js/data.js"></script>
   <script src="js/cart.js"></script>
   <script>
+    // Star rendering
+    function renderStarsStatic(rating) {
+      const full = Math.floor(rating);
+      const empty = 5 - full;
+      return '★'.repeat(full) + '☆'.repeat(empty);
+    }
+
     // Mobile menu
     function setupMobileMenu() {
       const hamburger = document.getElementById('hamburger');
@@ -184,7 +191,7 @@
           <a href="index.html" onclick="localStorage.setItem('filter','${product.category}')" class="product-category" style="text-decoration:none;">${product.category}</a>
           <h1>${product.name}</h1>
           <div class="product-rating">
-            <span class="stars">${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5 - Math.floor(product.rating))}</span>
+            <span class="stars">${renderStarsStatic(product.rating)}</span>
             <span class="rating-value">${product.rating} out of 5</span>
           </div>
           <span class="product-price">$${product.price}${product.originalPrice ? `<span class="product-price-original">$${product.originalPrice}</span>` : ''}</span>
@@ -270,7 +277,7 @@
             <span class="product-category">${p.category}</span>
             <a href="product.html?id=${p.id}"><h3 class="product-name">${p.name}</h3></a>
             <div class="product-rating">
-              <span class="stars">${'★'.repeat(Math.floor(p.rating))}</span>
+              <span class="stars">${renderStarsStatic(p.rating)}</span>
               <span class="rating-value">${p.rating}</span>
             </div>
             <div class="product-footer">
