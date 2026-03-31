@@ -49,49 +49,82 @@ function renderProductCard(product) {
   `;
 }
 
-// Category colors for placeholder images
-function getCategoryColor(category) {
-  const colors = {
-    'Backpacks': 'linear-gradient(135deg, #059669, #10b981)',
-    'Tents': 'linear-gradient(135deg, #0284c7, #38bdf8)',
-    'Gear': 'linear-gradient(135deg, #d97706, #fbbf24)',
-    'Clothing': 'linear-gradient(135deg, #7c3aed, #a78bfa)'
-  };
-  return colors[category] || 'linear-gradient(135deg, #6b7280, #9ca3af)';
-}
-
-// Category emojis
-function getCategoryEmoji(category) {
-  const emojis = {
-    'Backpacks': '🎒',
-    'Tents': '⛺',
-    'Gear': '🧭',
-    'Clothing': '🧥'
-  };
-  return emojis[category] || '📦';
-}
-
 // Quick add to cart from product card
 function addToCartQuick(productId) {
   Cart.addItem(productId, 1);
 }
 
+// Get filtered and sorted products
+function getFilteredProducts() {
+  const activeFilter = document.querySelector('.filter-btn.active');
+  const category = activeFilter?.dataset.category || 'all';
+  const searchQuery = document.getElementById('search-input')?.value?.toLowerCase().trim() || '';
+  const sortValue = document.getElementById('sort-select')?.value || 'featured';
+
+  let filtered = category === 'all'
+    ? [...products]
+    : products.filter(p => p.category === category);
+
+  if (searchQuery) {
+    filtered = filtered.filter(p =>
+      p.name.toLowerCase().includes(searchQuery) ||
+      p.category.toLowerCase().includes(searchQuery) ||
+      p.description.toLowerCase().includes(searchQuery)
+    );
+  }
+
+  // Sort
+  switch (sortValue) {
+    case 'price-low':
+      filtered.sort((a, b) => a.price - b.price);
+      break;
+    case 'price-high':
+      filtered.sort((a, b) => b.price - a.price);
+      break;
+    case 'rating':
+      filtered.sort((a, b) => b.rating - a.rating);
+      break;
+    case 'name':
+      filtered.sort((a, b) => a.name.localeCompare(b.name));
+      break;
+  }
+
+  return filtered;
+}
+
 // Render all products
-function renderProducts(filteredProducts) {
+function renderProducts() {
   const grid = document.getElementById('product-grid');
+  const countEl = document.getElementById('product-count');
   if (!grid) return;
 
-  if (filteredProducts.length === 0) {
+  const filtered = getFilteredProducts();
+
+  if (countEl) {
+    countEl.textContent = `Showing ${filtered.length} of ${products.length} products`;
+  }
+
+  if (filtered.length === 0) {
     grid.innerHTML = `
       <div class="no-results">
         <h3>No products found</h3>
         <p>Try a different search or category.</p>
+        <button class="btn btn-outline" onclick="resetFilters()">View All Products</button>
       </div>
     `;
     return;
   }
 
-  grid.innerHTML = filteredProducts.map(renderProductCard).join('');
+  grid.innerHTML = filtered.map(renderProductCard).join('');
+}
+
+// Reset all filters
+function resetFilters() {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector('.filter-btn[data-category="all"]')?.classList.add('active');
+  document.getElementById('search-input').value = '';
+  document.getElementById('sort-select').value = 'featured';
+  renderProducts();
 }
 
 // Category filtering
@@ -103,15 +136,22 @@ function setupFilters() {
     btn.addEventListener('click', () => {
       filters.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
-
-      const category = btn.dataset.category;
-      const filtered = category === 'all'
-        ? products
-        : products.filter(p => p.category === category);
-
-      renderProducts(filtered);
+      renderProducts();
     });
   });
+
+  // Check for filter from localStorage (from nav links)
+  const savedFilter = localStorage.getItem('filter');
+  if (savedFilter) {
+    localStorage.removeItem('filter');
+    filters.forEach(b => b.classList.remove('active'));
+    const target = document.querySelector(`.filter-btn[data-category="${savedFilter}"]`);
+    if (target) {
+      target.classList.add('active');
+      // Scroll to shop section
+      document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
 }
 
 // Search functionality
@@ -119,32 +159,59 @@ function setupSearch() {
   const searchInput = document.getElementById('search-input');
   if (!searchInput) return;
 
-  searchInput.addEventListener('input', (e) => {
-    const query = e.target.value.toLowerCase().trim();
-    const activeFilter = document.querySelector('.filter-btn.active');
-    const category = activeFilter?.dataset.category || 'all';
+  let debounce;
+  searchInput.addEventListener('input', () => {
+    clearTimeout(debounce);
+    debounce = setTimeout(renderProducts, 200);
+  });
+}
 
-    let filtered = category === 'all'
-      ? products
-      : products.filter(p => p.category === category);
+// Sort functionality
+function setupSort() {
+  const sortSelect = document.getElementById('sort-select');
+  if (!sortSelect) return;
 
-    if (query) {
-      filtered = filtered.filter(p =>
-        p.name.toLowerCase().includes(query) ||
-        p.category.toLowerCase().includes(query) ||
-        p.description.toLowerCase().includes(query)
-      );
+  sortSelect.addEventListener('change', renderProducts);
+}
+
+// Mobile menu
+function setupMobileMenu() {
+  const hamburger = document.getElementById('hamburger');
+  const navLinks = document.getElementById('navLinks');
+  if (!hamburger || !navLinks) return;
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('active');
+    navLinks.classList.toggle('active');
+  });
+
+  // Close on link click
+  navLinks.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('active');
+      navLinks.classList.remove('active');
+    });
+  });
+
+  // Close on outside click
+  document.addEventListener('click', (e) => {
+    if (!hamburger.contains(e.target) && !navLinks.contains(e.target)) {
+      hamburger.classList.remove('active');
+      navLinks.classList.remove('active');
     }
-
-    renderProducts(filtered);
   });
 }
 
 // Initialize shop page
 document.addEventListener('DOMContentLoaded', () => {
   if (document.getElementById('product-grid')) {
-    renderProducts(products);
+    setupMobileMenu();
     setupFilters();
     setupSearch();
+    setupSort();
+    renderProducts();
+  } else {
+    // Non-shop pages still need mobile menu
+    setupMobileMenu();
   }
 });

@@ -20,8 +20,10 @@
       </a>
       <ul class="nav-links" id="navLinks">
         <li><a href="index.html">Shop</a></li>
-        <li><a href="index.html#featured">New Arrivals</a></li>
-        <li><a href="index.html#sale">Sale</a></li>
+        <li><a href="index.html" onclick="localStorage.setItem('filter','Backpacks')">Backpacks</a></li>
+        <li><a href="index.html" onclick="localStorage.setItem('filter','Tents')">Tents</a></li>
+        <li><a href="index.html" onclick="localStorage.setItem('filter','Clothing')">Clothing</a></li>
+        <li><a href="index.html" onclick="localStorage.setItem('filter','Gear')">Gear</a></li>
       </ul>
       <div class="nav-actions">
         <a href="cart.html" class="cart-link">
@@ -38,6 +40,17 @@
       </button>
     </div>
   </nav>
+
+  <!-- Breadcrumb -->
+  <div class="container">
+    <div class="breadcrumb" id="breadcrumb">
+      <a href="index.html">Home</a>
+      <span>/</span>
+      <a href="index.html">Shop</a>
+      <span>/</span>
+      <span id="breadcrumb-product">Product</span>
+    </div>
+  </div>
 
   <!-- Product Detail -->
   <section class="product-detail">
@@ -66,13 +79,46 @@
             <span>Nomad Gear</span>
           </a>
           <p>Premium outdoor equipment for every adventure.</p>
+          <div class="social-links">
+            <a href="https://github.com/animatedaiadventures2025-hue" target="_blank" aria-label="GitHub">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 016.02 0c2.28-1.55 3.28-1.23 3.28-1.23.66 1.66.25 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.82.58A12 12 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            </a>
+          </div>
         </div>
-        <div class="footer-links"><h4>Shop</h4><ul><li><a href="#">All Products</a></li></ul></div>
-        <div class="footer-links"><h4>Company</h4><ul><li><a href="#">About</a></li></ul></div>
-        <div class="footer-links"><h4>Support</h4><ul><li><a href="#">FAQ</a></li></ul></div>
+        <div class="footer-links">
+          <h4>Shop</h4>
+          <ul>
+            <li><a href="index.html">All Products</a></li>
+            <li><a href="index.html" onclick="localStorage.setItem('filter','Backpacks')">Backpacks</a></li>
+            <li><a href="index.html" onclick="localStorage.setItem('filter','Tents')">Tents</a></li>
+            <li><a href="index.html" onclick="localStorage.setItem('filter','Gear')">Gear</a></li>
+            <li><a href="index.html" onclick="localStorage.setItem('filter','Clothing')">Clothing</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Company</h4>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Careers</a></li>
+          </ul>
+        </div>
+        <div class="footer-links">
+          <h4>Support</h4>
+          <ul>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Shipping</a></li>
+            <li><a href="#">Returns</a></li>
+            <li><a href="#">Size Guide</a></li>
+          </ul>
+        </div>
       </div>
       <div class="footer-bottom">
         <p>&copy; 2026 Nomad Gear. All rights reserved.</p>
+        <div class="footer-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+        </div>
       </div>
     </div>
   </footer>
@@ -83,37 +129,61 @@
   <script src="js/data.js"></script>
   <script src="js/cart.js"></script>
   <script>
+    // Mobile menu
+    function setupMobileMenu() {
+      const hamburger = document.getElementById('hamburger');
+      const navLinks = document.getElementById('navLinks');
+      if (!hamburger || !navLinks) return;
+      hamburger.addEventListener('click', () => {
+        hamburger.classList.toggle('active');
+        navLinks.classList.toggle('active');
+      });
+      navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+          hamburger.classList.remove('active');
+          navLinks.classList.remove('active');
+        });
+      });
+    }
+
     // Product detail page logic
     document.addEventListener('DOMContentLoaded', () => {
+      setupMobileMenu();
+
       const params = new URLSearchParams(window.location.search);
       const productId = parseInt(params.get('id'));
       const product = products.find(p => p.id === productId);
 
       if (!product) {
-        document.getElementById('product-detail').innerHTML = '<p style="text-align:center;padding:80px;">Product not found. <a href="index.html">Back to shop</a></p>';
+        document.getElementById('product-detail').innerHTML = '<div style="text-align:center;padding:80px;"><h2>Product not found</h2><p>The product you\'re looking for doesn\'t exist.</p><a href="index.html" class="btn btn-primary" style="margin-top:16px;">Back to Shop</a></div>';
         return;
       }
 
-      // Update page title
+      // Update page title and breadcrumb
       document.title = `${product.name} — Nomad Gear`;
+      document.getElementById('breadcrumb-product').textContent = product.name;
 
       const isClothing = product.category === 'Clothing';
+      const badgeHTML = product.badge
+        ? `<span class="product-badge ${product.badge.toLowerCase()}" style="position:absolute;top:16px;left:16px;z-index:2;">${product.badge}</span>`
+        : '';
 
       document.getElementById('product-detail').innerHTML = `
         <div class="image-gallery">
-          <div class="main-image">
+          <div class="main-image" style="position:relative;">
+            ${badgeHTML}
             <img src="${product.image}" alt="${product.name}" style="width:100%;height:100%;object-fit:cover;border-radius:16px;">
           </div>
           <div class="thumbnails">
             ${[1,2,3,4].map(i => `
-              <div class="thumbnail ${i === 1 ? 'active' : ''}" onclick="document.querySelector('.main-image img').src='${product.image}'">
+              <div class="thumbnail ${i === 1 ? 'active' : ''}" onclick="document.querySelector('.main-image img').src='${product.image}'; document.querySelectorAll('.thumbnail').forEach(t=>t.classList.remove('active')); this.classList.add('active');">
                 <img src="${product.image}" alt="${product.name}" style="width:100%;height:100%;object-fit:cover;border-radius:10px;">
               </div>
             `).join('')}
           </div>
         </div>
         <div class="product-detail-info">
-          <span class="product-category">${product.category}</span>
+          <a href="index.html" onclick="localStorage.setItem('filter','${product.category}')" class="product-category" style="text-decoration:none;">${product.category}</a>
           <h1>${product.name}</h1>
           <div class="product-rating">
             <span class="stars">${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5 - Math.floor(product.rating))}</span>
@@ -141,7 +211,12 @@
           </div>
           <div class="detail-actions">
             <button class="btn btn-primary btn-lg" id="add-to-cart">Add to Cart</button>
-            <button class="btn btn-outline btn-lg">Buy Now</button>
+            <button class="btn btn-outline btn-lg" id="buy-now">Buy Now</button>
+          </div>
+          <div style="margin-top:24px;padding:16px;background:var(--gray-50);border-radius:10px;font-size:0.813rem;color:var(--gray-600);">
+            <div style="margin-bottom:6px;">🚚 Free shipping on orders over $100</div>
+            <div style="margin-bottom:6px;">🔄 30-day easy returns</div>
+            <div>🛡️ 2-year warranty included</div>
           </div>
         </div>
       `;
@@ -171,15 +246,19 @@
         Cart.addItem(product.id, qty, size);
       });
 
-      // Related products (same category, excluding current)
+      // Buy Now → add to cart then redirect
+      document.getElementById('buy-now').addEventListener('click', () => {
+        const qty = parseInt(qtyInput.value);
+        const sizeEl = document.querySelector('.size-btn.active');
+        const size = sizeEl ? sizeEl.dataset.size : null;
+        Cart.addItem(product.id, qty, size);
+        window.location.href = 'cart.html';
+      });
+
+      // Related products
       const related = products.filter(p => p.category === product.category && p.id !== product.id).slice(0, 4);
-      if (related.length === 0) {
-        // If no same-category, show random
-        const others = products.filter(p => p.id !== product.id).slice(0, 4);
-        renderRelated(others);
-      } else {
-        renderRelated(related);
-      }
+      const relatedProducts = related.length >= 4 ? related : products.filter(p => p.id !== product.id).slice(0, 4);
+      renderRelated(relatedProducts);
     });
 
     function renderRelated(items) {
@@ -205,15 +284,6 @@
           </div>
         </div>
       `).join('');
-    }
-
-    function getCategoryColor(cat) {
-      const c = {'Backpacks':'linear-gradient(135deg,#059669,#10b981)','Tents':'linear-gradient(135deg,#0284c7,#38bdf8)','Gear':'linear-gradient(135deg,#d97706,#fbbf24)','Clothing':'linear-gradient(135deg,#7c3aed,#a78bfa)'};
-      return c[cat] || 'linear-gradient(135deg,#6b7280,#9ca3af)';
-    }
-    function getCategoryEmoji(cat) {
-      const e = {'Backpacks':'🎒','Tents':'⛺','Gear':'🧭','Clothing':'🧥'};
-      return e[cat] || '📦';
     }
   </script>
 </body>

@@ -946,6 +946,172 @@ img { max-width: 100%; display: block; }
   font-size: 0.813rem;
 }
 
+.footer-legal {
+  display: flex;
+  gap: 20px;
+}
+
+.footer-legal a:hover { color: #fff; }
+
+.social-links {
+  display: flex;
+  gap: 14px;
+  margin-top: 16px;
+}
+
+.social-links a {
+  color: var(--gray-400);
+  transition: color var(--transition);
+}
+
+.social-links a:hover { color: #fff; }
+
+/* ============================================
+   Shipping Banner
+   ============================================ */
+.shipping-banner {
+  background: var(--gray-100);
+  padding: 12px 0;
+  border-bottom: 1px solid var(--gray-200);
+}
+
+.shipping-banner .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  font-size: 0.813rem;
+  color: var(--gray-600);
+  flex-wrap: wrap;
+}
+
+/* ============================================
+   Features Bar
+   ============================================ */
+.features-bar {
+  padding: 48px 0;
+  background: #fff;
+  border-top: 1px solid var(--gray-200);
+}
+
+.features-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.feature-icon-sm {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.feature-item strong {
+  display: block;
+  font-size: 0.875rem;
+  color: var(--gray-900);
+  margin-bottom: 2px;
+}
+
+.feature-item p {
+  font-size: 0.813rem;
+  color: var(--gray-500);
+}
+
+/* ============================================
+   Shop Header / Sort
+   ============================================ */
+.shop-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.sort-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sort-bar label {
+  font-size: 0.813rem;
+  color: var(--gray-500);
+  font-weight: 500;
+}
+
+.sort-bar select {
+  padding: 8px 12px;
+  border: 1px solid var(--gray-200);
+  border-radius: 8px;
+  font-size: 0.813rem;
+  font-family: var(--font);
+  color: var(--gray-700);
+  background: #fff;
+  cursor: pointer;
+}
+
+.sort-bar select:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.product-count {
+  font-size: 0.813rem;
+  color: var(--gray-500);
+  margin-bottom: 20px;
+}
+
+/* ============================================
+   Breadcrumb
+   ============================================ */
+.breadcrumb {
+  padding: 16px 0;
+  font-size: 0.813rem;
+  color: var(--gray-500);
+}
+
+.breadcrumb a {
+  color: var(--gray-500);
+  transition: color var(--transition);
+}
+
+.breadcrumb a:hover { color: var(--primary); }
+
+.breadcrumb span { margin: 0 8px; }
+
+/* ============================================
+   Toast
+   ============================================ */
+#cart-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--dark);
+  color: #fff;
+  padding: 14px 24px;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  box-shadow: var(--shadow-xl);
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 2000;
+}
+
+#cart-toast.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
 /* ============================================
    Responsive
    ============================================ */
@@ -955,12 +1121,13 @@ img { max-width: 100%; display: block; }
   .cart-layout { grid-template-columns: 1fr; }
   .order-summary { position: static; }
   .footer-grid { grid-template-columns: 1fr 1fr; }
+  .features-row { grid-template-columns: repeat(2, 1fr); }
 }
 
 @media (max-width: 768px) {
   .nav-links { display: none; }
   .nav-search { max-width: 200px; }
-  .hamburger { display: flex; }
+  .hamburger { display: flex; flex-direction: column; }
 
   .nav-links.active {
     display: flex;
@@ -974,6 +1141,7 @@ img { max-width: 100%; display: block; }
     gap: 16px;
     border-bottom: 1px solid var(--gray-200);
     box-shadow: var(--shadow-lg);
+    z-index: 999;
   }
 
   .hero-banner { padding: 60px 0; }
@@ -990,6 +1158,8 @@ img { max-width: 100%; display: block; }
 
   .footer-grid { grid-template-columns: 1fr; }
   .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+  .features-row { grid-template-columns: 1fr; }
+  .shop-header { flex-direction: column; align-items: flex-start; }
 }
 
 @media (max-width: 480px) {
@@ -1000,4 +1170,5 @@ img { max-width: 100%; display: block; }
   .product-detail-info h1 { font-size: 1.5rem; }
   .nav-search { display: none; }
   .thumbnails { grid-template-columns: repeat(3, 1fr); }
+  .shipping-banner .container { flex-direction: column; gap: 4px; }
 }

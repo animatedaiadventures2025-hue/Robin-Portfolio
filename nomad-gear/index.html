@@ -20,8 +20,10 @@
       </a>
       <ul class="nav-links" id="navLinks">
         <li><a href="index.html" class="active">Shop</a></li>
-        <li><a href="#featured">New Arrivals</a></li>
-        <li><a href="#sale">Sale</a></li>
+        <li><a href="index.html" onclick="localStorage.setItem('filter','Backpacks')">Backpacks</a></li>
+        <li><a href="index.html" onclick="localStorage.setItem('filter','Tents')">Tents</a></li>
+        <li><a href="index.html" onclick="localStorage.setItem('filter','Clothing')">Clothing</a></li>
+        <li><a href="index.html" onclick="localStorage.setItem('filter','Gear')">Gear</a></li>
       </ul>
       <div class="nav-search">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
@@ -44,7 +46,7 @@
   </nav>
 
   <!-- Hero -->
-  <section class="hero-banner">
+  <section class="hero-banner" id="top">
     <div class="container">
       <div class="hero-badge">🔥 Spring Sale — Up to 30% Off</div>
       <h1>Gear up for<br>your next adventure</h1>
@@ -53,18 +55,78 @@
     </div>
   </section>
 
+  <!-- Free Shipping Banner -->
+  <div class="shipping-banner">
+    <div class="container">
+      <span>🚚 Free shipping on orders over $100</span>
+      <span>·</span>
+      <span>30-day returns</span>
+      <span>·</span>
+      <span>2-year warranty</span>
+    </div>
+  </div>
+
   <!-- Shop -->
   <section class="shop-section" id="shop">
     <div class="container">
-      <div class="filter-bar">
-        <button class="filter-btn active" data-category="all">All</button>
-        <button class="filter-btn" data-category="Backpacks">🎒 Backpacks</button>
-        <button class="filter-btn" data-category="Tents">⛺ Tents</button>
-        <button class="filter-btn" data-category="Gear">🧭 Gear</button>
-        <button class="filter-btn" data-category="Clothing">🧥 Clothing</button>
+      <div class="shop-header">
+        <div class="filter-bar">
+          <button class="filter-btn active" data-category="all">All</button>
+          <button class="filter-btn" data-category="Backpacks">🎒 Backpacks</button>
+          <button class="filter-btn" data-category="Tents">⛺ Tents</button>
+          <button class="filter-btn" data-category="Gear">🧭 Gear</button>
+          <button class="filter-btn" data-category="Clothing">🧥 Clothing</button>
+        </div>
+        <div class="sort-bar">
+          <label for="sort-select">Sort by:</label>
+          <select id="sort-select">
+            <option value="featured">Featured</option>
+            <option value="price-low">Price: Low to High</option>
+            <option value="price-high">Price: High to Low</option>
+            <option value="rating">Top Rated</option>
+            <option value="name">Name A-Z</option>
+          </select>
+        </div>
       </div>
+      <div class="product-count" id="product-count"></div>
       <div class="product-grid" id="product-grid">
         <!-- Rendered by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Bar -->
+  <section class="features-bar">
+    <div class="container">
+      <div class="features-row">
+        <div class="feature-item">
+          <span class="feature-icon-sm">🏔️</span>
+          <div>
+            <strong>Trail Tested</strong>
+            <p>Every product tested in real conditions</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon-sm">🔄</span>
+          <div>
+            <strong>Easy Returns</strong>
+            <p>30-day no-questions-asked returns</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon-sm">🛡️</span>
+          <div>
+            <strong>2-Year Warranty</strong>
+            <p>We stand behind every product</p>
+          </div>
+        </div>
+        <div class="feature-item">
+          <span class="feature-icon-sm">💬</span>
+          <div>
+            <strong>Expert Support</strong>
+            <p>Gear advice from real hikers</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -79,39 +141,53 @@
             <span>Nomad Gear</span>
           </a>
           <p>Premium outdoor equipment for every adventure. Built tough, priced fair.</p>
+          <div class="social-links">
+            <a href="https://github.com/animatedaiadventures2025-hue" target="_blank" aria-label="GitHub">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.55-1.39-1.34-1.76-1.34-1.76-1.09-.75.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.81 1.3 3.5 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1-.32 3.3 1.23a11.5 11.5 0 016.02 0c2.28-1.55 3.28-1.23 3.28-1.23.66 1.66.25 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.82.58A12 12 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            </a>
+            <a href="#" aria-label="Twitter">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+            </a>
+            <a href="#" aria-label="Instagram">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+            </a>
+          </div>
         </div>
         <div class="footer-links">
           <h4>Shop</h4>
           <ul>
-            <li><a href="#">All Products</a></li>
-            <li><a href="#">Backpacks</a></li>
-            <li><a href="#">Tents</a></li>
-            <li><a href="#">Gear</a></li>
+            <li><a href="index.html">All Products</a></li>
+            <li><a href="index.html" onclick="localStorage.setItem('filter','Backpacks')">Backpacks</a></li>
+            <li><a href="index.html" onclick="localStorage.setItem('filter','Tents')">Tents</a></li>
+            <li><a href="index.html" onclick="localStorage.setItem('filter','Gear')">Gear</a></li>
+            <li><a href="index.html" onclick="localStorage.setItem('filter','Clothing')">Clothing</a></li>
           </ul>
         </div>
         <div class="footer-links">
           <h4>Company</h4>
           <ul>
-            <li><a href="#">About</a></li>
+            <li><a href="#">About Us</a></li>
             <li><a href="#">Blog</a></li>
             <li><a href="#">Careers</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="#">Press</a></li>
           </ul>
         </div>
         <div class="footer-links">
           <h4>Support</h4>
           <ul>
-            <li><a href="#">Shipping</a></li>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Shipping Info</a></li>
             <li><a href="#">Returns</a></li>
-            <li><a href="#">FAQ</a></li>
             <li><a href="#">Size Guide</a></li>
+            <li><a href="#">Warranty</a></li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
         <p>&copy; 2026 Nomad Gear. All rights reserved.</p>
-        <div>
-          <a href="#">Privacy</a> · <a href="#">Terms</a>
+        <div class="footer-legal">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
         </div>
       </div>
     </div>
