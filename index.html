@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio — Web Developer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0f172a;
+      color: #e2e8f0;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
+
+    /* Hero */
+    .hero {
+      padding: 100px 0 60px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 16px;
+    }
+    .hero h1 span { color: #6366f1; }
+    .hero p {
+      font-size: 1.125rem;
+      color: #94a3b8;
+      max-width: 500px;
+      margin: 0 auto 40px;
+    }
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 60px;
+    }
+    .skill {
+      padding: 6px 16px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 100px;
+      font-size: 0.813rem;
+      color: #94a3b8;
+    }
+
+    /* Projects */
+    .projects { padding-bottom: 80px; }
+    .projects h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+    .project-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+    .project-card:hover {
+      border-color: #6366f1;
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    }
+    .project-preview {
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+    }
+    .project-info {
+      padding: 20px;
+    }
+    .project-info h3 {
+      font-size: 1.125rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 8px;
+    }
+    .project-info p {
+      font-size: 0.875rem;
+      color: #94a3b8;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+    .tag {
+      padding: 3px 10px;
+      background: #0f172a;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      color: #6366f1;
+    }
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: #6366f1;
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-decoration: none;
+    }
+    .project-link:hover { text-decoration: underline; }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 40px 0;
+      border-top: 1px solid #1e293b;
+      color: #475569;
+      font-size: 0.813rem;
+    }
+
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 2rem; }
+      .project-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <section class="hero">
+      <h1>Web <span>Developer</span></h1>
+      <p>Building modern websites and web applications. Clean code, great design, fast delivery.</p>
+      <div class="skills">
+        <span class="skill">HTML/CSS</span>
+        <span class="skill">JavaScript</span>
+        <span class="skill">React</span>
+        <span class="skill">Node.js</span>
+        <span class="skill">Python</span>
+        <span class="skill">WordPress</span>
+        <span class="skill">Responsive Design</span>
+        <span class="skill">E-Commerce</span>
+      </div>
+    </section>
+
+    <section class="projects">
+      <h2>Featured Projects</h2>
+      <div class="project-grid">
+        <a href="./flowboard/" class="project-card">
+          <div class="project-preview" style="background: linear-gradient(135deg, #6366f1, #4f46e5);">
+            📊
+          </div>
+          <div class="project-info">
+            <h3>FlowBoard — SaaS Landing Page</h3>
+            <p>A modern, responsive landing page for a project management SaaS. Features hero section, pricing table, testimonials, FAQ accordion, and smooth animations.</p>
+            <div class="project-tags">
+              <span class="tag">HTML</span>
+              <span class="tag">CSS</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">Responsive</span>
+            </div>
+            <span class="project-link">View Project →</span>
+          </div>
+        </a>
+
+        <a href="./nomad-gear/" class="project-card">
+          <div class="project-preview" style="background: linear-gradient(135deg, #059669, #10b981);">
+            🛒
+          </div>
+          <div class="project-info">
+            <h3>Nomad Gear — E-Commerce Store</h3>
+            <p>A fully functional outdoor gear shop with product catalog, category filtering, search, product detail pages, shopping cart with localStorage persistence.</p>
+            <div class="project-tags">
+              <span class="tag">HTML</span>
+              <span class="tag">CSS</span>
+              <span class="tag">JavaScript</span>
+              <span class="tag">E-Commerce</span>
+              <span class="tag">Cart</span>
+            </div>
+            <span class="project-link">View Project →</span>
+          </div>
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <p>© 2026 — Portfolio</p>
+  </footer>
+
+</body>
+</html>

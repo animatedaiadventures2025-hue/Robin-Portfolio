@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cart — Nomad Gear</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container nav-container">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">🧭</div>
+        <span>Nomad Gear</span>
+      </a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="index.html">Shop</a></li>
+        <li><a href="index.html#featured">New Arrivals</a></li>
+        <li><a href="index.html#sale">Sale</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="cart.html" class="cart-link">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+          <span class="cart-badge">0</span>
+        </a>
+      </div>
+      <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Cart Page -->
+  <section class="cart-page">
+    <div class="container">
+      <h1>Your Cart</h1>
+      <div id="cart-content">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="logo">
+            <div class="logo-icon">🧭</div>
+            <span>Nomad Gear</span>
+          </a>
+          <p>Premium outdoor equipment for every adventure.</p>
+        </div>
+        <div class="footer-links"><h4>Shop</h4><ul><li><a href="#">All Products</a></li></ul></div>
+        <div class="footer-links"><h4>Company</h4><ul><li><a href="#">About</a></li></ul></div>
+        <div class="footer-links"><h4>Support</h4><ul><li><a href="#">FAQ</a></li></ul></div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Nomad Gear. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/cart.js"></script>
+  <script>
+    // Cart page logic
+    function getCategoryColor(cat) {
+      const c = {'Backpacks':'linear-gradient(135deg,#059669,#10b981)','Tents':'linear-gradient(135deg,#0284c7,#38bdf8)','Gear':'linear-gradient(135deg,#d97706,#fbbf24)','Clothing':'linear-gradient(135deg,#7c3aed,#a78bfa)'};
+      return c[cat] || 'linear-gradient(135deg,#6b7280,#9ca3af)';
+    }
+    function getCategoryEmoji(cat) {
+      const e = {'Backpacks':'🎒','Tents':'⛺','Gear':'🧭','Clothing':'🧥'};
+      return e[cat] || '📦';
+    }
+
+    function renderCart() {
+      const container = document.getElementById('cart-content');
+      const items = Cart.getItems();
+
+      if (items.length === 0) {
+        container.innerHTML = `
+          <div class="empty-cart">
+            <div class="empty-cart-icon">🛒</div>
+            <h2>Your cart is empty</h2>
+            <p>Looks like you haven't added any gear yet.</p>
+            <a href="index.html" class="btn btn-primary">Start Shopping</a>
+          </div>
+        `;
+        return;
+      }
+
+      const subtotal = Cart.getSubtotal();
+      const shipping = Cart.getShipping();
+      const tax = Cart.getTax();
+      const total = Cart.getTotal();
+
+      container.innerHTML = `
+        <div class="cart-layout">
+          <div class="cart-items">
+            ${items.map(item => {
+              const product = products.find(p => p.id === item.id);
+              if (!product) return '';
+              return `
+                <div class="cart-item">
+                  <div class="cart-item-image">
+                    <div class="product-placeholder" style="background: ${getCategoryColor(product.category)}; height: 100%; font-size: 2rem; border-radius: 10px;">
+                      ${getCategoryEmoji(product.category)}
+                    </div>
+                  </div>
+                  <div class="cart-item-details">
+                    <a href="product.html?id=${product.id}">
+                      <h3 class="cart-item-name">${product.name}</h3>
+                    </a>
+                    <div class="cart-item-meta">
+                      ${item.size ? `Size: ${item.size} · ` : ''}
+                      ${product.category}
+                    </div>
+                    <div class="cart-item-bottom">
+                      <div class="quantity-picker">
+                        <button class="qty-btn" onclick="changeQty(${product.id}, ${item.qty - 1}, ${item.size ? `'${item.size}'` : 'null'})">−</button>
+                        <input type="number" class="qty-input" value="${item.qty}" min="1" max="10"
+                          onchange="changeQty(${product.id}, this.value, ${item.size ? `'${item.size}'` : 'null'})">
+                        <button class="qty-btn" onclick="changeQty(${product.id}, ${item.qty + 1}, ${item.size ? `'${item.size}'` : 'null'})">+</button>
+                      </div>
+                      <span class="cart-item-price">$${(product.price * item.qty).toFixed(2)}</span>
+                    </div>
+                    <button class="cart-item-remove" onclick="removeItem(${product.id}, ${item.size ? `'${item.size}'` : 'null'})">
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+          <div class="order-summary">
+            <h2>Order Summary</h2>
+            <div class="summary-row">
+              <span>Subtotal (${Cart.getCount()} items)</span>
+              <span>$${subtotal.toFixed(2)}</span>
+            </div>
+            <div class="summary-row">
+              <span>Shipping</span>
+              <span class="${shipping === 0 ? 'free' : ''}">${shipping === 0 ? 'FREE' : '$' + shipping.toFixed(2)}</span>
+            </div>
+            <div class="summary-row">
+              <span>Tax (8%)</span>
+              <span>$${tax.toFixed(2)}</span>
+            </div>
+            <div class="summary-row total">
+              <span>Total</span>
+              <span>$${total.toFixed(2)}</span>
+            </div>
+            <button class="btn btn-primary btn-lg btn-block">Proceed to Checkout</button>
+            <a href="index.html" class="btn btn-outline btn-block" style="margin-top:12px">Continue Shopping</a>
+          </div>
+        </div>
+      `;
+    }
+
+    function changeQty(id, qty, size) {
+      Cart.updateQuantity(id, parseInt(qty), size);
+      renderCart();
+    }
+
+    function removeItem(id, size) {
+      Cart.removeItem(id, size);
+      renderCart();
+    }
+
+    document.addEventListener('DOMContentLoaded', renderCart);
+  </script>
+</body>
+</html>
