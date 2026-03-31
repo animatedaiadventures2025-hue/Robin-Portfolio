@@ -9,138 +9,34 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #0f172a;
-      color: #e2e8f0;
-      min-height: 100vh;
-      -webkit-font-smoothing: antialiased;
-    }
-    .container { max-width: 900px; margin: 0 auto; padding: 0 24px; }
-
-    /* Hero */
-    .hero {
-      padding: 100px 0 60px;
-      text-align: center;
-    }
-    .hero h1 {
-      font-size: 3rem;
-      font-weight: 800;
-      color: #fff;
-      margin-bottom: 16px;
-    }
+    body { font-family: 'Inter', sans-serif; background: #0f172a; color: #e2e8f0; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+    .hero { padding: 100px 0 60px; text-align: center; }
+    .hero h1 { font-size: 3rem; font-weight: 800; color: #fff; margin-bottom: 16px; }
     .hero h1 span { color: #6366f1; }
-    .hero p {
-      font-size: 1.125rem;
-      color: #94a3b8;
-      max-width: 500px;
-      margin: 0 auto 40px;
-    }
-    .skills {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 8px;
-      margin-bottom: 60px;
-    }
-    .skill {
-      padding: 6px 16px;
-      background: #1e293b;
-      border: 1px solid #334155;
-      border-radius: 100px;
-      font-size: 0.813rem;
-      color: #94a3b8;
-    }
-
-    /* Projects */
+    .hero p { font-size: 1.125rem; color: #94a3b8; max-width: 500px; margin: 0 auto 40px; }
+    .skills { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-bottom: 60px; }
+    .skill { padding: 6px 16px; background: #1e293b; border: 1px solid #334155; border-radius: 100px; font-size: 0.813rem; color: #94a3b8; }
     .projects { padding-bottom: 80px; }
-    .projects h2 {
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 24px;
-      text-align: center;
-    }
-    .project-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 24px;
-    }
-    .project-card {
-      background: #1e293b;
-      border: 1px solid #334155;
-      border-radius: 16px;
-      overflow: hidden;
-      transition: all 0.2s;
-    }
-    .project-card:hover {
-      border-color: #6366f1;
-      transform: translateY(-4px);
-      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-    }
-    .project-preview {
-      height: 200px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3rem;
-    }
-    .project-info {
-      padding: 20px;
-    }
-    .project-info h3 {
-      font-size: 1.125rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 8px;
-    }
-    .project-info p {
-      font-size: 0.875rem;
-      color: #94a3b8;
-      line-height: 1.6;
-      margin-bottom: 16px;
-    }
-    .project-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      margin-bottom: 16px;
-    }
-    .tag {
-      padding: 3px 10px;
-      background: #0f172a;
-      border-radius: 4px;
-      font-size: 0.75rem;
-      color: #6366f1;
-    }
-    .project-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: #6366f1;
-      font-size: 0.875rem;
-      font-weight: 600;
-      text-decoration: none;
-    }
+    .projects h2 { font-size: 1.5rem; font-weight: 700; color: #fff; margin-bottom: 8px; text-align: center; }
+    .projects .count { text-align: center; color: #64748b; font-size: 0.9rem; margin-bottom: 32px; }
+    .project-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .project-card { background: #1e293b; border: 1px solid #334155; border-radius: 16px; overflow: hidden; transition: all 0.2s; }
+    .project-card:hover { border-color: #6366f1; transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+    .project-preview { height: 180px; display: flex; align-items: center; justify-content: center; font-size: 3rem; }
+    .project-info { padding: 20px; }
+    .project-info h3 { font-size: 1rem; font-weight: 700; color: #fff; margin-bottom: 8px; }
+    .project-info p { font-size: 0.8rem; color: #94a3b8; line-height: 1.6; margin-bottom: 12px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .project-tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; }
+    .tag { padding: 2px 8px; background: #0f172a; border-radius: 4px; font-size: 0.7rem; color: #6366f1; }
+    .project-link { display: inline-flex; align-items: center; gap: 6px; color: #6366f1; font-size: 0.8rem; font-weight: 600; text-decoration: none; }
     .project-link:hover { text-decoration: underline; }
-
-    /* Footer */
-    footer {
-      text-align: center;
-      padding: 40px 0;
-      border-top: 1px solid #1e293b;
-      color: #475569;
-      font-size: 0.813rem;
-    }
-
-    @media (max-width: 640px) {
-      .hero h1 { font-size: 2rem; }
-      .project-grid { grid-template-columns: 1fr; }
-    }
+    footer { text-align: center; padding: 40px 0; border-top: 1px solid #1e293b; color: #475569; font-size: 0.813rem; }
+    @media (max-width: 900px) { .project-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 640px) { .hero h1 { font-size: 2rem; } .project-grid { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
-
   <div class="container">
     <section class="hero">
       <h1>Web <span>Developer</span></h1>
@@ -159,65 +55,82 @@
 
     <section class="projects">
       <h2>Featured Projects</h2>
+      <p class="count">7 live demos — click any to explore</p>
       <div class="project-grid">
         <a href="./flowboard/" class="project-card">
-          <div class="project-preview" style="background: linear-gradient(135deg, #6366f1, #4f46e5);">
-            📊
-          </div>
+          <div class="project-preview" style="background: linear-gradient(135deg, #6366f1, #4f46e5);">📊</div>
           <div class="project-info">
             <h3>FlowBoard — SaaS Landing Page</h3>
-            <p>A modern, responsive landing page for a project management SaaS. Features hero section, pricing table, testimonials, FAQ accordion, and smooth animations.</p>
-            <div class="project-tags">
-              <span class="tag">HTML</span>
-              <span class="tag">CSS</span>
-              <span class="tag">JavaScript</span>
-              <span class="tag">Responsive</span>
-            </div>
+            <p>Modern responsive landing page for a project management SaaS. Hero, pricing table, testimonials, FAQ accordion, smooth animations.</p>
+            <div class="project-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span></div>
             <span class="project-link">View Project →</span>
           </div>
         </a>
 
         <a href="./nomad-gear/" class="project-card">
-          <div class="project-preview" style="background: linear-gradient(135deg, #059669, #10b981);">
-            🛒
-          </div>
+          <div class="project-preview" style="background: linear-gradient(135deg, #059669, #10b981);">🛒</div>
           <div class="project-info">
             <h3>Nomad Gear — E-Commerce Store</h3>
-            <p>A fully functional outdoor gear shop with product catalog, category filtering, search, product detail pages, shopping cart with localStorage persistence.</p>
-            <div class="project-tags">
-              <span class="tag">HTML</span>
-              <span class="tag">CSS</span>
-              <span class="tag">JavaScript</span>
-              <span class="tag">E-Commerce</span>
-              <span class="tag">Cart</span>
-            </div>
+            <p>Fully functional outdoor gear shop with product catalog, filtering, search, cart with localStorage, and 3-page shopping flow.</p>
+            <div class="project-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">E-Commerce</span></div>
             <span class="project-link">View Project →</span>
           </div>
         </a>
 
         <a href="./dashboard/" class="project-card">
-          <div class="project-preview" style="background: linear-gradient(135deg, #1e293b, #0f172a);">
-            📊
-          </div>
+          <div class="project-preview" style="background: linear-gradient(135deg, #1e293b, #0f172a);">📈</div>
           <div class="project-info">
             <h3>Admin Dashboard</h3>
-            <p>A full-featured admin panel with sidebar navigation, stat cards, revenue charts, data tables, product catalog, and user management.</p>
-            <div class="project-tags">
-              <span class="tag">HTML</span>
-              <span class="tag">CSS</span>
-              <span class="tag">JavaScript</span>
-              <span class="tag">Dashboard</span>
-            </div>
+            <p>Full-featured admin panel with sidebar navigation, stat cards, revenue charts, data tables, product catalog, and settings.</p>
+            <div class="project-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">Dashboard</span></div>
+            <span class="project-link">View Project →</span>
+          </div>
+        </a>
+
+        <a href="./figma-to-html/" class="project-card">
+          <div class="project-preview" style="background: linear-gradient(135deg, #7c3aed, #6366f1);">🎨</div>
+          <div class="project-info">
+            <h3>Figma to HTML — DataFlow SaaS</h3>
+            <p>Premium dark-themed SaaS landing page built from design spec. 10 sections, glassmorphism navbar, pricing toggle, FAQ accordion.</p>
+            <div class="project-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">Figma</span></div>
+            <span class="project-link">View Project →</span>
+          </div>
+        </a>
+
+        <a href="./restaurant/" class="project-card">
+          <div class="project-preview" style="background: linear-gradient(135deg, #a8854a, #c9a96e);">🍽️</div>
+          <div class="project-info">
+            <h3>Saveur — Restaurant Website</h3>
+            <p>Elegant fine dining restaurant site with menu tabs, gallery, reservation form, testimonials, and location with hours.</p>
+            <div class="project-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">Restaurant</span></div>
+            <span class="project-link">View Project →</span>
+          </div>
+        </a>
+
+        <a href="./chatbot-widget/" class="project-card">
+          <div class="project-preview" style="background: linear-gradient(135deg, #6366f1, #8b5cf6);">🤖</div>
+          <div class="project-info">
+            <h3>AI Chatbot Widget</h3>
+            <p>Floating chat widget with simulated AI responses, typing indicator, suggested prompts, and customization panel. Try it live!</p>
+            <div class="project-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">AI</span></div>
+            <span class="project-link">View Project →</span>
+          </div>
+        </a>
+
+        <a href="./booking-app/" class="project-card">
+          <div class="project-preview" style="background: linear-gradient(135deg, #4f46e5, #3730a3);">📅</div>
+          <div class="project-info">
+            <h3>BookEasy — Appointment Scheduling</h3>
+            <p>Booking app with service selection, calendar picker, time slots, reservation form, confirmation modal, and My Bookings page.</p>
+            <div class="project-tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JavaScript</span><span class="tag">Booking</span></div>
             <span class="project-link">View Project →</span>
           </div>
         </a>
       </div>
     </section>
   </div>
-
   <footer>
     <p>© 2026 — Portfolio</p>
   </footer>
-
 </body>
 </html>
