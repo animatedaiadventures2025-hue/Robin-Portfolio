@@ -10,7 +10,7 @@ const products = [
     price: 189,
     rating: 4.8,
     description: "A rugged 65-liter backpack designed for multi-day treks. Features adjustable suspension, rain cover, and hydration compatibility. Built with ripstop nylon for durability on the toughest trails.",
-    image: "https://images.pexels.com/photos/3760529/pexels-photo-3760529.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&dpr=1",
+    image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&h=600&fit=crop",
     badge: null
   },
   {
@@ -51,7 +51,7 @@ const products = [
     price: 179,
     rating: 4.9,
     description: "Waterproof full-grain leather boots with Vibram outsoles. Ankle support system and cushioned midsole for all-day comfort on rocky terrain. Break-in time: minimal.",
-    image: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=600&h=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1520219306100-ec4afeeefe58?w=600&h=600&fit=crop",
     badge: null
   },
   {
@@ -91,7 +91,7 @@ const products = [
     category: "Gear",
     price: 59,
     rating: 4.3,
-    description: "High-efficiency 20-watt solar panel for home and cabin use. Monocrystalline cells deliver consistent power output. Weather-resistant aluminum frame with 25-year performance warranty. Perfect for off-grid setups.",
+    description: "High-efficiency 20-watt solar panel for home and cabin use. Monocrystalline cells deliver consistent power output. Weather-resistant aluminum frame with 25-year performance warranty.",
     image: "https://images.pexels.com/photos/356036/pexels-photo-356036.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&dpr=1",
     badge: "New"
   },
@@ -123,7 +123,7 @@ const products = [
     originalPrice: 169,
     rating: 4.6,
     description: "Bombproof 90-liter duffel with backpack straps and reinforced bottom. Lockable zippers, internal mesh pockets, and ID window. Built to survive baggage handlers worldwide.",
-    image: "https://images.pexels.com/photos/1598505/pexels-photo-1598505.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&dpr=1",
+    image: "https://images.unsplash.com/photo-1565026057447-bc90a3dceb87?w=600&h=600&fit=crop",
     badge: "Sale"
   }
 ];
