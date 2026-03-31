@@ -41,7 +41,7 @@ const products = [
     price: 149,
     rating: 4.5,
     description: "Comfort-rated to 20°F with premium 650-fill down insulation. Contoured hood, draft collar, and full-length zipper with anti-snag strip. Weighs just 2.8 lbs.",
-    image: "https://images.pexels.com/photos/5765837/pexels-photo-5765837.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&dpr=1",
+    image: "https://images.pexels.com/photos/2582818/pexels-photo-2582818.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&dpr=1",
     badge: null
   },
   {
