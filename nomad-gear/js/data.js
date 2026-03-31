@@ -41,7 +41,7 @@ const products = [
     price: 149,
     rating: 4.5,
     description: "Comfort-rated to 20°F with premium 650-fill down insulation. Contoured hood, draft collar, and full-length zipper with anti-snag strip. Weighs just 2.8 lbs.",
-    image: "https://images.unsplash.com/photo-1510312305653-8ed496efae75?w=600&h=600&fit=crop",
+    image: "https://images.pexels.com/photos/5765837/pexels-photo-5765837.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&dpr=1",
     badge: null
   },
   {
@@ -62,7 +62,7 @@ const products = [
     originalPrice: 99,
     rating: 4.4,
     description: "Carbon fiber trekking poles with cork grips and adjustable wrist straps. 3-section collapsible design packs down to 24 inches. Includes rubber tips and snow baskets.",
-    image: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=600&h=600&fit=crop",
+    image: "https://images.pexels.com/photos/1659437/pexels-photo-1659437.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&dpr=1",
     badge: "Sale"
   },
   {
