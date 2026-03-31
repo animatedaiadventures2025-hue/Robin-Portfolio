@@ -10,7 +10,7 @@ const products = [
     price: 189,
     rating: 4.8,
     description: "A rugged 65-liter backpack designed for multi-day treks. Features adjustable suspension, rain cover, and hydration compatibility. Built with ripstop nylon for durability on the toughest trails.",
-    image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&h=600&fit=crop",
+    image: "https://images.pexels.com/photos/3760529/pexels-photo-3760529.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&dpr=1",
     badge: null
   },
   {
@@ -87,12 +87,12 @@ const products = [
   },
   {
     id: 9,
-    name: "SolarPack 20W Charger",
+    name: "SunGrid 20W Panel",
     category: "Gear",
     price: 59,
     rating: 4.3,
-    description: "Foldable 20-watt solar panel with dual USB ports. Charges phones in 2-3 hours in direct sunlight. Weather-resistant ETFE coating and carabiner clips for pack attachment.",
-    image: "https://images.unsplash.com/photo-1558618666-fcd25c85f82e?w=600&h=600&fit=crop",
+    description: "High-efficiency 20-watt solar panel for home and cabin use. Monocrystalline cells deliver consistent power output. Weather-resistant aluminum frame with 25-year performance warranty. Perfect for off-grid setups.",
+    image: "https://images.pexels.com/photos/356036/pexels-photo-356036.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&dpr=1",
     badge: "New"
   },
   {
@@ -112,7 +112,7 @@ const products = [
     price: 49,
     rating: 4.5,
     description: "Merino wool blend base layer with 4-way stretch. Naturally odor-resistant and moisture-wicking. Flatlock seams prevent chafing. Ideal for layering in cold conditions.",
-    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=600&h=600&fit=crop",
+    image: "https://images.pexels.com/photos/6941024/pexels-photo-6941024.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&dpr=1",
     badge: null
   },
   {
@@ -123,7 +123,7 @@ const products = [
     originalPrice: 169,
     rating: 4.6,
     description: "Bombproof 90-liter duffel with backpack straps and reinforced bottom. Lockable zippers, internal mesh pockets, and ID window. Built to survive baggage handlers worldwide.",
-    image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&h=600&fit=crop",
+    image: "https://images.pexels.com/photos/1598505/pexels-photo-1598505.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&dpr=1",
     badge: "Sale"
   }
 ];
