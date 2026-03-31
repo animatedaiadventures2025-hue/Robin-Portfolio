@@ -12,12 +12,18 @@ function renderStars(rating) {
 
 // Render a single product card
 function renderProductCard(product) {
+  const badgeHTML = product.badge
+    ? `<span class="product-badge ${product.badge.toLowerCase()}">${product.badge}</span>`
+    : '';
+  const originalPriceHTML = product.originalPrice
+    ? `<span class="product-price-original">$${product.originalPrice}</span>`
+    : '';
+
   return `
     <div class="product-card" data-category="${product.category}">
+      ${badgeHTML}
       <a href="product.html?id=${product.id}" class="product-image">
-        <div class="product-placeholder" style="background: ${getCategoryColor(product.category)}">
-          <span>${getCategoryEmoji(product.category)}</span>
-        </div>
+        <img src="${product.image}" alt="${product.name}" loading="lazy">
       </a>
       <div class="product-info">
         <span class="product-category">${product.category}</span>
@@ -29,7 +35,7 @@ function renderProductCard(product) {
           <span class="rating-value">${product.rating}</span>
         </div>
         <div class="product-footer">
-          <span class="product-price">$${product.price}</span>
+          <span class="product-price">$${product.price}${originalPriceHTML}</span>
           <button class="btn-add-cart" onclick="addToCartQuick(${product.id})" title="Add to cart">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
               <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>

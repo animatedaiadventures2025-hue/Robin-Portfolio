@@ -102,16 +102,12 @@
       document.getElementById('product-detail').innerHTML = `
         <div class="image-gallery">
           <div class="main-image">
-            <div class="product-placeholder" style="background: ${getCategoryColor(product.category)}; height: 100%; font-size: 6rem; border-radius: 16px;">
-              ${getCategoryEmoji(product.category)}
-            </div>
+            <img src="${product.image}" alt="${product.name}" style="width:100%;height:100%;object-fit:cover;border-radius:16px;">
           </div>
           <div class="thumbnails">
             ${[1,2,3,4].map(i => `
-              <div class="thumbnail ${i === 1 ? 'active' : ''}">
-                <div class="product-placeholder" style="background: ${getCategoryColor(product.category)}; height: 100%; font-size: 1.5rem; border-radius: 10px;">
-                  ${getCategoryEmoji(product.category)}
-                </div>
+              <div class="thumbnail ${i === 1 ? 'active' : ''}" onclick="document.querySelector('.main-image img').src='${product.image}'">
+                <img src="${product.image}" alt="${product.name}" style="width:100%;height:100%;object-fit:cover;border-radius:10px;">
               </div>
             `).join('')}
           </div>
@@ -123,7 +119,7 @@
             <span class="stars">${'★'.repeat(Math.floor(product.rating))}${'☆'.repeat(5 - Math.floor(product.rating))}</span>
             <span class="rating-value">${product.rating} out of 5</span>
           </div>
-          <span class="product-price">$${product.price}</span>
+          <span class="product-price">$${product.price}${product.originalPrice ? `<span class="product-price-original">$${product.originalPrice}</span>` : ''}</span>
           <p class="product-description">${product.description}</p>
           ${isClothing ? `
             <div class="option-group">
@@ -191,9 +187,7 @@
       grid.innerHTML = items.map(p => `
         <div class="product-card">
           <a href="product.html?id=${p.id}" class="product-image">
-            <div class="product-placeholder" style="background: ${getCategoryColor(p.category)}">
-              <span>${getCategoryEmoji(p.category)}</span>
-            </div>
+            <img src="${p.image}" alt="${p.name}" loading="lazy" style="width:100%;height:240px;object-fit:cover;">
           </a>
           <div class="product-info">
             <span class="product-category">${p.category}</span>
