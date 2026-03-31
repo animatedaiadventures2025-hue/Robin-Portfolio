@@ -112,7 +112,7 @@ const products = [
     price: 49,
     rating: 4.5,
     description: "Merino wool blend base layer with 4-way stretch. Naturally odor-resistant and moisture-wicking. Flatlock seams prevent chafing. Ideal for layering in cold conditions.",
-    image: "https://images.pexels.com/photos/6941024/pexels-photo-6941024.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&dpr=1",
+    image: "https://images.pexels.com/photos/8436677/pexels-photo-8436677.jpeg?auto=compress&cs=tinysrgb&w=600&h=600&dpr=1",
     badge: null
   },
   {
