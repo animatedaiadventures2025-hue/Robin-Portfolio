@@ -123,7 +123,7 @@ const products = [
     originalPrice: 169,
     rating: 4.6,
     description: "Bombproof 90-liter duffel with backpack straps and reinforced bottom. Lockable zippers, internal mesh pockets, and ID window. Built to survive baggage handlers worldwide.",
-    image: "https://images.unsplash.com/photo-1565026057447-bc90a3dceb87?w=600&h=600&fit=crop",
+    image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=600&h=600&fit=crop",
     badge: "Sale"
   }
 ];
