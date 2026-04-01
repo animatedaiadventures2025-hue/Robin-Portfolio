@@ -590,7 +590,50 @@ if (positionSelect) {
 }
 if (colorInput) {
   colorInput.addEventListener('input', () => {
-    document.documentElement.style.setProperty('--primary', colorInput.value);
+    const hex = colorInput.value;
+    // Convert hex to RGB for lighter/darker variants
+    const r = parseInt(hex.slice(1, 3), 16);
+    const g = parseInt(hex.slice(3, 5), 16);
+    const b = parseInt(hex.slice(5, 7), 16);
+    
+    // Lighter hover color (mix with white)
+    const hover = `rgb(${Math.round(r + (255 - r) * 0.3)}, ${Math.round(g + (255 - g) * 0.3)}, ${Math.round(b + (255 - b) * 0.3)})`;
+    // Very light version for suggestion backgrounds
+    const light = `rgba(${r}, ${g}, ${b}, 0.1)`;
+    // Border version
+    const border = `rgba(${r}, ${g}, ${b}, 0.2)`;
+    // Glow version for toggle button
+    const glow = `rgba(${r}, ${g}, ${b}, 0.4)`;
+    
+    document.documentElement.style.setProperty('--primary', hex);
+    document.documentElement.style.setProperty('--primary-hover', hover);
+    
+    // Update elements that use inline styles
+    document.querySelectorAll('.suggestion').forEach(btn => {
+      btn.style.background = light;
+      btn.style.borderColor = border;
+      btn.style.color = hover;
+    });
+    document.querySelectorAll('.chatbot-toggle').forEach(btn => {
+      btn.style.boxShadow = `0 4px 20px ${glow}`;
+    });
+    document.querySelectorAll('.chatbot-header').forEach(el => {
+      el.style.background = `rgba(${r}, ${g}, ${b}, 0.1)`;
+    });
+    // Update the hero badge
+    document.querySelectorAll('.hero-badge').forEach(el => {
+      el.style.background = light;
+      el.style.color = hex;
+      el.style.borderColor = border;
+    });
+    // Update section labels
+    document.querySelectorAll('.section-label').forEach(el => {
+      el.style.color = hex;
+    });
+    // Update stat numbers
+    document.querySelectorAll('.hero-stat-num').forEach(el => {
+      el.style.color = hex;
+    });
   });
 }
 

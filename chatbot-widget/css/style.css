@@ -5,7 +5,7 @@
   --border: #334155;
   --text: #f8fafc; --text-muted: #94a3b8;
   --primary: #6366f1; --primary-hover: #818cf8;
-  --gradient: linear-gradient(135deg, #6366f1, #8b5cf6);
+  --gradient: linear-gradient(135deg, var(--primary), var(--primary-hover));
   --success: #22c55e; --radius: 12px;
   --font: 'Inter', -apple-system, sans-serif;
 }
@@ -164,7 +164,7 @@ a { text-decoration: none; color: inherit; }
 
 .chatbot-header {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 16px 20px; background: rgba(99,102,241,0.1);
+  padding: 16px 20px; background: color-mix(in srgb, var(--primary) 10%, transparent);
   border-bottom: 1px solid rgba(255,255,255,0.06);
 }
 .chatbot-header-info { display: flex; align-items: center; gap: 10px; }
@@ -191,12 +191,15 @@ a { text-decoration: none; color: inherit; }
 .msg-bubble p { font-size: 0.9rem; line-height: 1.5; }
 .msg-suggestions { display: flex; flex-direction: column; gap: 6px; margin-top: 12px; }
 .suggestion {
-  background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.2);
-  color: var(--primary-hover); padding: 8px 14px; border-radius: 8px;
+  background: rgba(var(--primary), 0.1);
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--primary) 20%, transparent);
+  color: var(--primary-hover);
+  padding: 8px 14px; border-radius: 8px;
   font-size: 0.8rem; cursor: pointer; transition: all 0.2s;
   text-align: left; font-family: var(--font);
 }
-.suggestion:hover { background: rgba(99,102,241,0.2); }
+.suggestion:hover { background: color-mix(in srgb, var(--primary) 20%, transparent); }
 
 .user-message { display: flex; justify-content: flex-end; animation: fadeInMsg 0.3s ease; }
 .user-bubble { background: var(--primary); padding: 12px 16px; border-radius: 12px; border-bottom-right-radius: 4px; max-width: 280px; }
