@@ -23,183 +23,204 @@ const chatMessages = document.getElementById('chatMessages');
 const chatInput = document.getElementById('chatInput');
 const chatSend = document.getElementById('chatSend');
 
-// Toggle panel
 chatToggle.addEventListener('click', () => {
   chatPanel.classList.toggle('open');
-  if (chatPanel.classList.contains('open')) chatInput.focus();
+  if (chatPanel.classList.contains('open')) {
+    chatInput.focus();
+    startAnalytics();
+  }
 });
 chatClose.addEventListener('click', () => chatPanel.classList.remove('open'));
-
 document.addEventListener('click', (e) => {
-  if (!document.getElementById('chatbot').contains(e.target)) {
-    chatPanel.classList.remove('open');
-  }
+  if (!document.getElementById('chatbot').contains(e.target)) chatPanel.classList.remove('open');
 });
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') chatPanel.classList.remove('open');
 });
 
-// ==================== CONVERSATION STATE ====================
+// ==================== STATE ====================
 let conversationHistory = [];
 let lastTopic = null;
 let messageCount = 0;
+let leadCaptured = false;
+let leadData = {};
+let leadStep = 0; // 0=not started, 1=asking name, 2=asking email, 3=asking phone, 4=done
+let bookingStep = 0; // 0=not started, 1=choosing date, 2=choosing time, 3=confirming
+let bookingData = {};
+let analytics = { conversations: 0, avgResponseMs: 850, topicsHandled: new Set(), startTime: null };
+let currentLanguage = 'en';
 
-// ==================== AI RESPONSE ENGINE ====================
+// ==================== LANGUAGES ====================
+const greetings = {
+  en: "Hi there! 👋 I'm your AI assistant. How can I help you today?",
+  es: "¡Hola! 👋 Soy tu asistente de IA. ¿En qué puedo ayudarte hoy?",
+  fr: "Salut ! 👋 Je suis votre assistant IA. Comment puis-je vous aider aujourd'hui ?",
+  de: "Hallo! 👋 Ich bin Ihr KI-Assistent. Wie kann ich Ihnen heute helfen?",
+  pt: "Olá! 👋 Sou seu assistente de IA. Como posso ajudá-lo hoje?",
+  ja: "こんにちは！👋 AIアシスタントです。今日は何をお手伝いしましょうか？",
+  zh: "你好！👋 我是你的AI助手。今天有什么可以帮你的吗？",
+  hi: "नमस्ते! 👋 मैं आपका AI सहायक हूँ। आज मैं आपकी कैसे मदद कर सकता हूँ?"
+};
+
+// ==================== TOPIC ENGINE ====================
 const topics = {
   greeting: {
-    keywords: ['hello', 'hi', 'hey', 'yo', 'sup', 'good morning', 'good afternoon', 'good evening', 'howdy', 'greetings'],
+    keywords: ['hello', 'hi', 'hey', 'yo', 'sup', 'good morning', 'good afternoon', 'good evening', 'howdy', 'greetings', 'hola', 'bonjour', 'hallo'],
     responses: [
       "Hey there! 👋 Welcome to ChatFlow. What brings you here today?",
       "Hi! Great to see you here. How can I help you out?",
       "Hello! 😊 I'm the ChatFlow assistant. What would you like to know?",
-      "Hey! Thanks for stopping by. What can I do for you?",
-      "Hi there! 👋 Ready to answer any questions you have about ChatFlow."
+      "Hey! Thanks for stopping by. What can I do for you?"
     ]
   },
   services: {
     keywords: ['service', 'offer', 'do you do', 'what do you', 'provide', 'help with', 'specialize', 'capabilities', 'what can you'],
     responses: [
-      "Great question! We help businesses add smart chat to their websites. Here's what we do:\n\n• AI chatbot widgets — answers customer questions 24/7\n• Lead capture — qualifies visitors while you sleep\n• Appointment booking — connects to your calendar\n• FAQ automation — handles repetitive questions\n• Custom integrations — connects to your CRM, Slack, email\n\nWant me to dive deeper into any of these?",
-      "We make it dead simple to add an AI assistant to your website. Think of it as a 24/7 receptionist that never sleeps, never takes breaks, and actually knows your business inside out.\n\nMain services:\n🔹 Smart chat widgets\n🔹 Lead qualification bots\n🔹 Appointment scheduling\n🔹 Customer support automation\n\nWhich one sounds most useful for you?"
+      "Great question! We help businesses add smart chat to their websites:\n\n• AI chatbot widgets — answers 24/7\n• Lead capture — qualifies visitors automatically\n• Appointment booking — connects to your calendar\n• FAQ automation — handles repetitive questions\n• Custom integrations — CRM, Slack, email\n\nWant me to dive deeper into any of these?",
+      "We make it dead simple to add an AI assistant to your website:\n\n🔹 Smart chat widgets\n🔹 Lead qualification bots\n🔹 Appointment scheduling\n🔹 Customer support automation\n\nWhich one sounds most useful for you?"
     ]
   },
   pricing: {
-    keywords: ['price', 'cost', 'how much', 'pricing', 'plan', 'expensive', 'cheap', 'budget', 'affordable', 'fee', 'subscription', 'free trial'],
+    keywords: ['price', 'cost', 'how much', 'pricing', 'plan', 'expensive', 'cheap', 'budget', 'affordable', 'fee', 'subscription', 'free trial', 'plan'],
     responses: [
-      "We've got flexible plans for every size:\n\n• **Starter** — $29/mo (1,000 chats, 1 website)\n• **Pro** — $79/mo (10,000 chats, 5 websites, priority support)\n• **Business** — $199/mo (unlimited everything)\n\nAll plans include a 14-day free trial — no credit card needed. Want me to help you pick the right one?",
-      "Honest answer: it depends on your traffic. Our Starter plan is $29/mo which handles most small businesses. Bigger sites with 10K+ monthly visitors usually go Pro at $79/mo.\n\nThe cool part? Every plan includes:\n✅ AI-powered responses\n✅ Custom branding\n✅ Analytics dashboard\n✅ 14-day free trial\n\nWant to start with the free trial and see if it's worth it?"
+      "We've got flexible plans:\n\n• **Starter** — $29/mo (1,000 chats, 1 site)\n• **Pro** — $79/mo (10,000 chats, 5 sites)\n• **Business** — $199/mo (unlimited)\n\nAll plans include a 14-day free trial — no credit card needed. Want to try it?",
+      "Honest answer: depends on your traffic. Starter is $29/mo for most small businesses. Pro at $79/mo for bigger sites.\n\nEvery plan includes:\n✅ AI responses\n✅ Custom branding\n✅ Analytics\n✅ 14-day free trial\n\nWant to start with the free trial?"
     ]
   },
   start: {
     keywords: ['start', 'begin', 'get started', 'sign up', 'setup', 'install', 'how do i', 'onboard', 'create account', 'register'],
     responses: [
-      "Super easy — takes about 5 minutes:\n\n1. Sign up at chatflow.ai (no credit card needed)\n2. Customize your widget (colors, greeting, logo)\n3. Copy one line of code into your website\n4. You're live! 🎉\n\nWant me to walk you through it step by step?",
-      "Getting started is the easiest part:\n\n1️⃣ Create your free account\n2️⃣ Set up your chat widget (we have templates)\n3️⃣ Add one line of JavaScript to your site\n4️⃣ Watch it work!\n\nMost people are up and running in under 10 minutes. Want to try it?"
+      "Super easy — 5 minutes:\n\n1. Sign up at chatflow.ai (no credit card)\n2. Customize your widget (colors, greeting, logo)\n3. Copy one line of code into your website\n4. You're live! 🎉\n\nWant me to walk you through it?",
+      "Getting started is the easiest part:\n\n1️⃣ Create your free account\n2️⃣ Set up your widget (templates available)\n3️⃣ Add one line of JavaScript\n4️⃣ Watch it work!\n\nMost people are up in under 10 minutes."
     ]
   },
   timeline: {
     keywords: ['time', 'long', 'duration', 'fast', 'quick', 'minute', 'hour', 'day', 'week', 'deploy', 'set up time', 'how long'],
     responses: [
-      "Lightning fast, honestly:\n\n⚡ Sign up: 2 minutes\n⚡ Customize widget: 5 minutes\n⚡ Install on your site: 1 minute (literally one line of code)\n⚡ Total: under 10 minutes\n\nThe AI starts answering questions immediately. No training needed — it learns from your website content automatically.",
-      "Most people are fully set up in under 10 minutes. I'm not exaggerating — the widget is designed to be drop-in simple.\n\nIf you want to train it on custom FAQs or connect integrations, add another 15-20 minutes. But the basic setup? Under 10 minutes, guaranteed."
+      "Lightning fast:\n\n⚡ Sign up: 2 min\n⚡ Customize: 5 min\n⚡ Install: 1 min (one line of code)\n⚡ Total: under 10 minutes\n\nThe AI starts answering immediately. No training needed.",
+      "Most people are fully set up in under 10 minutes. Not exaggerating.\n\nWant custom FAQs or integrations? Add 15-20 min more."
     ]
   },
   portfolio: {
     keywords: ['portfolio', 'example', 'demo', 'work', 'show', 'case study', 'client', 'built', 'project', 'sample'],
     responses: [
-      "We've powered chat widgets for 10,000+ websites! Here are some highlights:\n\n• A real estate agency — 43% more leads captured\n• An e-commerce store — support tickets dropped 60%\n• A SaaS company — 28% increase in demo bookings\n• A law firm — after-hours inquiries went from 0 to 35/week\n\nWant to see the widget in action? Just scroll up to the interactive demo! 👆",
-      "Absolutely! You can see our widget working right on this page — just click the chat bubble in the bottom right corner. That's a live ChatFlow widget.\n\nAs for client results:\n📊 60% fewer support tickets (average)\n📊 40% more leads captured\n📊 4.9/5 customer satisfaction\n\nWant specifics for your industry?"
+      "We power 10,000+ websites! Highlights:\n\n• Real estate agency — 43% more leads\n• E-commerce store — 60% fewer tickets\n• SaaS company — 28% more demo bookings\n• Law firm — 35 after-hours inquiries/week\n\nThe widget on this page is a live demo — try it! 👆",
+      "You can see our widget right on this page — click the chat bubble!\n\nClient results:\n📊 60% fewer support tickets\n📊 40% more leads\n📊 4.9/5 satisfaction\n\nWant specifics for your industry?"
     ]
   },
   contact: {
-    keywords: ['contact', 'email', 'phone', 'call', 'reach', 'talk to', 'speak', 'support team', 'sales team', 'human'],
+    keywords: ['contact', 'email', 'phone', 'call', 'reach', 'talk to', 'speak', 'support team', 'sales team', 'human', 'real person'],
     responses: [
-      "I'd love to connect you with our team! Here's how:\n\n📧 Email: hello@chatflow.ai\n📞 Phone: 1-800-CHATFLOW\n💬 Live chat: you're already here! 😄\n\nOr I can schedule a call for you. What works best?",
-      "You can reach our team anytime:\n\n• Sales questions → sales@chatflow.ai\n• Technical support → support@chatflow.ai\n• General inquiries → hello@chatflow.ai\n• Phone → 1-800-CHATFLOW (Mon-Fri 9am-6pm EST)\n\nOr just ask me and I'll do my best to help right now!"
+      "Here's how to reach us:\n\n📧 hello@chatflow.ai\n📞 1-800-CHATFLOW\n💬 Live chat: you're here! 😄\n\nI can also schedule a call. Want me to set that up?",
+      "Reach us anytime:\n\n• Sales → sales@chatflow.ai\n• Support → support@chatflow.ai\n• Phone → 1-800-CHATFLOW (Mon-Fri 9-6 EST)\n\nOr ask me right now — I can handle most questions!"
     ]
   },
   support: {
     keywords: ['support', 'help', 'issue', 'problem', 'bug', 'broken', 'not working', 'error', 'trouble'],
     responses: [
-      "Sorry to hear you're having trouble! Let me help.\n\nFor immediate support:\n🔧 Check our docs at docs.chatflow.ai\n💬 Email support@chatflow.ai (response within 2 hours)\n📞 Call 1-800-CHATFLOW for urgent issues\n\nPro and Business plans get priority support with 30-minute response times.\n\nCan you tell me what's going on? I might be able to help right now."
+      "Let me help!\n\n🔧 Docs: docs.chatflow.ai\n📧 support@chatflow.ai (2hr response)\n📞 1-800-CHATFLOW for urgent issues\n\nPro/Business plans get 30-min priority response.\n\nWhat's going on? I might fix it right now."
     ]
   },
   features: {
     keywords: ['feature', 'functionality', 'capability', 'what does', 'can it', 'does it', 'smart', 'ai feature', 'advanced'],
     responses: [
-      "ChatFlow is packed with features:\n\n🤖 **AI-Powered Responses** — understands context, not just keywords\n📊 **Analytics Dashboard** — track conversations, common questions, conversion rates\n🎨 **Custom Branding** — match your colors, logo, and tone\n📅 **Calendar Integration** — books appointments directly\n🔗 **CRM Integration** — syncs with HubSpot, Salesforce, Pipedrive\n🌐 **Multi-language** — supports 50+ languages\n📱 **Mobile Optimized** — works perfectly on all devices\n🔒 **Enterprise Security** — SOC 2, GDPR compliant\n\nWhich feature matters most to your business?"
+      "ChatFlow is packed with features:\n\n🤖 **AI Responses** — understands context, not keywords\n📊 **Analytics** — conversations, questions, conversions\n🎨 **Custom Branding** — colors, logo, tone\n📅 **Calendar Booking** — direct appointments\n🔗 **CRM Sync** — HubSpot, Salesforce, Pipedrive\n🌐 **50+ Languages**\n📱 **Mobile Optimized**\n🔒 **SOC 2, GDPR compliant**\n\nWhich matters most to your business?"
     ]
   },
   integrations: {
     keywords: ['integrat', 'connect', 'crm', 'hubspot', 'salesforce', 'slack', 'zapier', 'api', 'webhook', 'plugin', 'wordpress', 'shopify'],
     responses: [
-      "We integrate with everything you already use:\n\n🔗 **CRM:** HubSpot, Salesforce, Pipedrive, Zoho\n📧 **Email:** Mailchimp, SendGrid, ConvertKit\n💬 **Chat:** Slack, Microsoft Teams, Discord\n📅 **Calendar:** Google Calendar, Calendly, Cal.com\n🛒 **E-commerce:** Shopify, WooCommerce, BigCommerce\n⚙️ **Automation:** Zapier, Make, n8n (1000+ apps)\n\nPlus a full REST API and webhooks for custom integrations.\n\nWhich tools are you currently using?"
+      "We integrate with everything:\n\n🔗 CRM: HubSpot, Salesforce, Pipedrive, Zoho\n📧 Email: Mailchimp, SendGrid\n💬 Chat: Slack, Teams, Discord\n📅 Calendar: Google, Calendly\n🛒 E-commerce: Shopify, WooCommerce, BigCommerce\n⚙️ Automation: Zapier, Make, n8n (1000+ apps)\n\nPlus REST API + webhooks for custom stuff.\n\nWhat tools are you using?"
     ]
   },
   security: {
     keywords: ['security', 'secure', 'privacy', 'gdpr', 'encrypt', 'compli', 'safe', 'data', 'hipaa', 'soc'],
     responses: [
-      "Security is non-negotiable for us:\n\n🔒 End-to-end encryption on all messages\n🏛️ SOC 2 Type II certified\n🇪🇺 GDPR compliant\n🏥 HIPAA-ready (Business plan)\n🔐 SSO/SAML support\n📋 Full audit logs\n🇺🇸 Data hosted in US (EU available)\n📊 Regular third-party security audits\n\nYour customers' data stays safe. Period."
+      "Security is non-negotiable:\n\n🔒 End-to-end encryption\n🏛️ SOC 2 Type II\n🇪🇺 GDPR compliant\n🏥 HIPAA-ready (Business)\n🔐 SSO/SAML\n📋 Audit logs\n🇺🇸 US-hosted (EU available)\n\nYour data stays safe. Period."
     ]
   },
   team: {
     keywords: ['team', 'who', 'about you', 'company', 'behind', 'founded', 'history', 'people'],
     responses: [
-      "We're a team of 25 people based in San Francisco, founded in 2023. Our founders previously built customer support tools at Zendesk and Intercom — so we know this space inside out.\n\nWe're backed by Y Combinator and serve 10,000+ businesses worldwide. Small team, big impact. 💪"
+      "We're 25 people in SF, founded in 2023. Founders previously built support tools at Zendesk and Intercom.\n\nBacked by Y Combinator, serving 10,000+ businesses. Small team, big impact. 💪"
     ]
   },
   location: {
     keywords: ['location', 'where', 'office', 'based', 'hour', 'open', 'available', 'timezone', 'country'],
     responses: [
-      "Our HQ is in San Francisco, but we're a remote-first company with team members across 12 countries.\n\n🕐 Support hours: 24/7 for chat, 9am-6pm EST for phone\n🌍 Our widget works globally — supports 50+ languages\n\nAnd of course, the widget itself works 24/7 on YOUR website, no matter where your customers are!"
+      "HQ in SF, but remote-first with team in 12 countries.\n\n🕐 Support: 24/7 chat, 9am-6pm EST phone\n🌍 Widget works globally — 50+ languages\n\nThe widget works 24/7 on YOUR site, wherever customers are!"
     ]
   },
   process: {
     keywords: ['process', 'how does it work', 'how it works', 'workflow', 'step', 'explain', 'understand'],
     responses: [
-      "Here's exactly how ChatFlow works:\n\n1️⃣ **Install** — One line of JavaScript on your site\n2️⃣ **Learn** — The AI reads your website content automatically\n3️⃣ **Customize** — Add FAQs, set your tone, pick colors\n4️⃣ **Deploy** — Widget goes live instantly\n5️⃣ **Improve** — AI gets smarter with every conversation\n\nThe best part? It learns from real customer interactions. The more it chats, the better it gets."
+      "Here's how ChatFlow works:\n\n1️⃣ **Install** — One script tag\n2️⃣ **Learn** — AI reads your site automatically\n3️⃣ **Customize** — FAQs, tone, colors\n4️⃣ **Deploy** — Live instantly\n5️⃣ **Improve** — Gets smarter with every chat\n\nIt learns from real conversations. The more it chats, the better."
     ]
   },
   comparison: {
     keywords: ['compare', 'vs', 'versus', 'better than', 'alternative', 'other', 'competitor', 'instead of', 'difference between'],
     responses: [
-      "Fair question! Here's what makes ChatFlow different:\n\n⚡ **Setup speed** — 5 minutes vs days/weeks for competitors\n🤖 **True AI** — understands context, not just keyword matching\n💰 **Pricing** — starts at $29/mo (competitors: $99+)\n🎨 **Customization** — full white-labeling included\n📊 **Analytics** — built-in, not an add-on\n🔌 **Integrations** — 50+ native integrations out of the box\n\nThe biggest difference? Our AI actually *understands* your business. It's not a glorified FAQ search — it's a real conversation partner."
+      "What makes ChatFlow different:\n\n⚡ **Setup** — 5 min vs days\n🤖 **True AI** — context-aware, not keyword matching\n💰 **Pricing** — $29/mo vs $99+ competitors\n🎨 **White-label** — full branding included\n📊 **Analytics** — built-in\n🔌 **50+ integrations** — out of the box\n\nOur AI actually *understands* your business. Not a glorified FAQ search."
     ]
   },
   techstack: {
     keywords: ['tech', 'technology', 'react', 'node', 'javascript', 'python', 'language', 'framework', 'wordpress', 'code', 'developer', 'api', 'sdk'],
     responses: [
-      "For your website, we're platform-agnostic:\n\n✅ Works with ANY website — just one script tag\n✅ WordPress plugin available\n✅ Shopify app in the App Store\n✅ React/Vue/Angular component library\n✅ Full REST API + webhooks\n✅ JavaScript SDK for custom implementations\n\nUnder the hood, we use a custom LLM fine-tuned for customer conversations. Think ChatGPT but specifically trained on support, sales, and booking scenarios.\n\nWant to see our API docs?"
+      "Platform-agnostic:\n\n✅ ANY website — one script tag\n✅ WordPress plugin\n✅ Shopify app\n✅ React/Vue/Angular library\n✅ REST API + webhooks\n✅ JS SDK for custom builds\n\nUnder the hood: custom LLM fine-tuned for support, sales, and booking.\n\nWant our API docs?"
     ]
   },
   ecommerce: {
     keywords: ['ecommerce', 'e-commerce', 'shop', 'store', 'product', 'order', 'checkout', 'shopify', 'woocommerce', 'sell'],
     responses: [
-      "E-commerce is one of our biggest use cases! Here's how ChatFlow helps online stores:\n\n🛒 **Product recommendations** — suggests items based on browsing\n📦 **Order tracking** — answers \"where's my order?\" instantly\n🔄 **Returns & exchanges** — handles the process automatically\n💳 **Checkout help** — reduces cart abandonment by 25%\n⭐ **Review collection** — follows up with happy customers\n\nOur Shopify stores see an average 30% reduction in support tickets. Want to see a demo?"
+      "E-commerce is huge for us:\n\n🛒 Product recommendations\n📦 Order tracking\n🔄 Returns/exchanges\n💳 Checkout help (reduces cart abandonment 25%)\n⭐ Review collection\n\nShopify stores see 30% fewer support tickets. Want a demo?"
     ]
   },
   mobile: {
     keywords: ['mobile', 'app', 'ios', 'android', 'phone', 'responsive', 'tablet'],
     responses: [
-      "ChatFlow works perfectly on mobile:\n\n📱 Responsive widget — adapts to any screen size\n⚡ Fast loading — under 200KB, loads in under 1 second\n🎯 Touch-optimized — designed for thumb-friendly chat\n🌐 Works on any mobile browser\n\nIf you're looking for a native mobile app with chat, we also offer an SDK for iOS and Android. Want details?"
+      "Works perfectly on mobile:\n\n📱 Responsive — adapts to any screen\n⚡ Fast — under 200KB, loads in <1s\n🎯 Touch-optimized — thumb-friendly\n🌐 Any mobile browser\n\nWe also have an iOS/Android SDK for native apps. Want details?"
     ]
   },
   testimonials: {
     keywords: ['review', 'testimonial', 'feedback', 'rating', 'customer', 'satisfaction', 'happy', 'love', 'recommend'],
     responses: [
-      "Here's what our customers say:\n\n⭐⭐⭐⭐⭐ \"Cut our support tickets in half. Best investment we made this year.\" — Sarah K., SaaS Founder\n\n⭐⭐⭐⭐⭐ \"Setup took 7 minutes. Started getting leads on day one.\" — Mike R., Agency Owner\n\n⭐⭐⭐⭐⭐ \"Our customers love the instant responses. 4.9/5 satisfaction score.\" — Lisa T., E-commerce Manager\n\nWe maintain a 4.9/5 rating across G2, Capterra, and Product Hunt. Want to see more?"
+      "What customers say:\n\n⭐⭐⭐⭐⭐ \"Cut our support tickets in half.\" — Sarah K., SaaS Founder\n\n⭐⭐⭐⭐⭐ \"Setup took 7 minutes. Leads on day one.\" — Mike R., Agency\n\n⭐⭐⭐⭐⭐ \"4.9/5 satisfaction score.\" — Lisa T., E-commerce\n\n4.9/5 on G2, Capterra, Product Hunt. Want more?"
     ]
   },
   booking: {
-    keywords: ['book', 'appointment', 'schedule', 'meeting', 'call', 'consultation', 'demo', 'calendar'],
+    keywords: ['book', 'appointment', 'schedule', 'meeting', 'consultation', 'demo', 'calendar'],
     responses: [
-      "I'd love to set that up! Here's how:\n\n📅 Click below to book a free demo:\n→ chatflow.ai/book-demo\n\nOr give us your email and I'll send you a personalized demo link. Takes 15 minutes, and we'll show you exactly how ChatFlow would work for your specific business.\n\nWhat's your email? 📧"
+      "I can book that for you right now! 📅\n\nPick a date — I'll show you available slots."
     ]
+  },
+  lead: {
+    keywords: ['interested', 'buy', 'sign me up', 'want to try', 'ready', 'let\'s do it', 'take my', 'order'],
+    responses: ["Let's get you set up! I just need a few details."]
   },
   goodbye: {
     keywords: ['bye', 'goodbye', 'thanks', 'thank', 'done', 'see you', 'gotta go', 'take care', 'cheers', 'later'],
     responses: [
-      "Thanks for chatting! 😊 If you ever have more questions, I'm always here. Have a great day! 👋",
-      "Happy to help! Don't hesitate to come back anytime. Take care! 🙌",
-      "Glad I could help! Feel free to reach out whenever you need. Bye for now! 👋",
-      "Anytime! That's what I'm here for. Have an awesome day! ✨"
+      "Thanks for chatting! 😊 I'm always here if you need anything. Have a great day! 👋",
+      "Happy to help! Come back anytime. Take care! 🙌",
+      "Glad I could help! Reach out whenever. Bye! 👋",
+      "Anytime! Have an awesome day! ✨"
     ]
   }
 };
 
-// Suggestions that follow each topic
+// ==================== SUGGESTIONS ====================
 const followUpSuggestions = {
   greeting: ["What services do you offer?", "How much does it cost?", "How do I get started?"],
   services: ["How much does it cost?", "How do I get started?", "Do you have a free trial?"],
-  pricing: ["Is there a free trial?", "What's included in each plan?", "Can I upgrade later?"],
+  pricing: ["Is there a free trial?", "What's included?", "Can I upgrade later?"],
   start: ["How much does it cost?", "Do you integrate with WordPress?", "How does the AI work?"],
   timeline: ["How do I get started?", "Do you offer a free trial?", "What integrations do you have?"],
   portfolio: ["How much does it cost?", "Can I see more examples?", "How do I get started?"],
   contact: ["Book a demo", "What's your pricing?", "How do I get started?"],
-  support: ["What's your email?", "Do you have docs?", "What plan includes priority support?"],
+  support: ["What's your email?", "Do you have docs?", "Priority support details?"],
   features: ["How much does it cost?", "Do you integrate with HubSpot?", "Is it secure?"],
   integrations: ["Do you have an API?", "Does it work with Shopify?", "How do I get started?"],
-  security: ["What integrations do you have?", "How much does it cost?", "Do you have HIPAA?"],
+  security: ["What integrations do you have?", "How much does it cost?", "HIPAA details?"],
   team: ["How do I get started?", "What makes you different?", "What's your pricing?"],
   location: ["How do I contact you?", "What's your pricing?", "Do you support my language?"],
   process: ["How do I get started?", "How much does it cost?", "What tech do you use?"],
@@ -207,31 +228,102 @@ const followUpSuggestions = {
   techstack: ["Do you have an API?", "Does it work with WordPress?", "How do I get started?"],
   ecommerce: ["How much does it cost?", "Does it work with Shopify?", "How do I get started?"],
   mobile: ["How much does it cost?", "How do I get started?", "Does it work on all devices?"],
-  testimonials: ["How much does it cost?", "How do I get started?", "Can I see more reviews?"],
-  booking: ["What's included in the demo?", "How much does it cost?", "How long is the demo?"],
-  goodbye: ["What services do you offer?", "How much does it cost?", "How do I get started?"]
+  testimonials: ["How much does it cost?", "How do I get started?", "More reviews?"],
+  booking: ["Available time slots?", "How much does it cost?", "What's in the demo?"],
+  goodbye: ["What services do you offer?", "How much does it cost?", "How do I get started?"],
+  lead: ["What's the pricing?", "How do I get started?", "Book a demo"]
 };
 
+// ==================== LEAD QUALIFICATION FLOW ====================
+function startLeadCapture() {
+  if (leadCaptured || leadStep > 0) return false;
+  if (messageCount < 2) return false; // Don't ask too early
+  return true;
+}
+
+function handleLeadStep(msg) {
+  if (leadStep === 1) {
+    leadData.name = msg.trim();
+    leadStep = 2;
+    return `Nice to meet you, ${leadData.name}! 😊 What's your email address? We'll send you a personalized demo link.`;
+  }
+  if (leadStep === 2) {
+    if (!msg.includes('@') || !msg.includes('.')) {
+      return "Hmm, that doesn't look like a valid email. Could you double-check? 📧";
+    }
+    leadData.email = msg.trim();
+    leadStep = 3;
+    return "Got it! And what's the best phone number to reach you? (Just in case we need to follow up) 📞";
+  }
+  if (leadStep === 3) {
+    leadData.phone = msg.trim();
+    leadStep = 4;
+    leadCaptured = true;
+    analytics.conversations++;
+    return `Perfect! Here's what I've got:\n\n👤 Name: ${leadData.name}\n📧 Email: ${leadData.email}\n📞 Phone: ${leadData.phone}\n\nI've sent your info to our sales team. You'll receive a personalized demo link within the hour! 🎉\n\nIs there anything else I can help with?`;
+  }
+  return null;
+}
+
+// ==================== BOOKING FLOW ====================
+function handleBookingStep(msg) {
+  const lower = msg.toLowerCase().trim();
+
+  if (bookingStep === 1) {
+    // User picks a day
+    const days = ['today', 'tomorrow', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+    const matched = days.find(d => lower.includes(d));
+    if (matched) {
+      bookingData.date = matched.charAt(0).toUpperCase() + matched.slice(1);
+      bookingStep = 2;
+      return `Great! ${bookingData.date} works. Here are the available slots:\n\n🕐 10:00 AM EST\n🕐 11:30 AM EST\n🕐 2:00 PM EST\n🕐 3:30 PM EST\n\nWhich time works best?`;
+    }
+    return "Pick a day — I'll show you available slots. Try saying 'tomorrow' or a specific day!";
+  }
+
+  if (bookingStep === 2) {
+    // User picks a time
+    const timeMatch = lower.match(/(\d{1,2})(?::(\d{2}))?\s*(am|pm|a\.m\.|p\.m\.)?/);
+    if (timeMatch || lower.includes('10') || lower.includes('11') || lower.includes('2') || lower.includes('3')) {
+      let time = '10:00 AM';
+      if (lower.includes('11')) time = '11:30 AM';
+      else if (lower.includes('2')) time = '2:00 PM';
+      else if (lower.includes('3')) time = '3:30 PM';
+      bookingData.time = time;
+      bookingStep = 3;
+      return `You're booking a demo:\n\n📅 ${bookingData.date}\n🕐 ${bookingData.time} EST\n\nI just need your email to send the confirmation. What's your email?`;
+    }
+    return "Just pick a time from the list — 10 AM, 11:30 AM, 2 PM, or 3:30 PM?";
+  }
+
+  if (bookingStep === 3) {
+    if (msg.includes('@') && msg.includes('.')) {
+      bookingData.email = msg.trim();
+      bookingStep = 0;
+      analytics.conversations++;
+      return `🎉 You're all set!\n\n📅 Demo: ${bookingData.date} at ${bookingData.time} EST\n📧 Confirmation sent to: ${bookingData.email}\n\nOur team will walk you through ChatFlow and show you how it works for your specific business. See you then!\n\nAnything else I can help with?`;
+    }
+    return "Just need your email to send the confirmation! 📧";
+  }
+  return null;
+}
+
+// ==================== DETECT TOPIC ====================
 function detectTopic(msg) {
   const lower = msg.toLowerCase();
-  
-  // Check each topic, scoring by keyword matches
   let bestTopic = null;
   let bestScore = 0;
-  
+
   for (const [topic, data] of Object.entries(topics)) {
     let score = 0;
     for (const keyword of data.keywords) {
-      if (lower.includes(keyword)) {
-        score += keyword.length; // Longer keywords = more specific match
-      }
+      if (lower.includes(keyword)) score += keyword.length;
     }
     if (score > bestScore) {
       bestScore = score;
       bestTopic = topic;
     }
   }
-  
   return bestTopic;
 }
 
@@ -239,79 +331,135 @@ function getRandomItem(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
+// ==================== MAIN RESPONSE ENGINE ====================
 function getAIResponse(msg) {
+  const startTime = performance.now();
   messageCount++;
-  
-  // Detect topic
+
+  // Check if we're in a lead capture flow
+  if (leadStep > 0 && leadStep < 4) {
+    const response = handleLeadStep(msg);
+    if (response) {
+      analytics.topicsHandled.add('lead_capture');
+      return response;
+    }
+  }
+
+  // Check if we're in a booking flow
+  if (bookingStep > 0) {
+    const response = handleBookingStep(msg);
+    if (response) {
+      analytics.topicsHandled.add('booking');
+      return response;
+    }
+  }
+
   const topic = detectTopic(msg);
-  
-  // Handle follow-ups: if same topic or vague message, acknowledge context
+  const lower = msg.toLowerCase().trim();
+
+  // Language switching
+  if (lower.includes('switch to') || lower.includes('language') || lower.includes('hablar') || lower.includes('parler')) {
+    const langs = { spanish: 'es', french: 'fr', german: 'de', portuguese: 'pt', japanese: 'ja', chinese: 'zh', hindi: 'hi' };
+    for (const [name, code] of Object.entries(langs)) {
+      if (lower.includes(name)) {
+        currentLanguage = code;
+        return `Language switched! 🌐\n\n${greetings[code]}\n\n(Type 'english' to switch back)`;
+      }
+    }
+    return "We support 50+ languages! Try saying 'switch to Spanish' or 'switch to French' 🌐";
+  }
+  if (['english', 'switch to english', 'in english'].includes(lower)) {
+    currentLanguage = 'en';
+    return "Switched back to English! How can I help? 😊";
+  }
+
+  // Booking trigger
+  if (topic === 'booking') {
+    bookingStep = 1;
+    bookingData = {};
+    return getRandomItem(topics.booking.responses);
+  }
+
+  // Lead capture trigger — offer after a few messages about pricing/services
+  if (topic === 'lead' || (messageCount >= 3 && !leadCaptured && (topic === 'pricing' || topic === 'start'))) {
+    // 30% chance to offer lead capture
+    if (!leadStep && Math.random() < 0.3) {
+      leadStep = 1;
+      return "It sounds like you're seriously considering ChatFlow! 🎉 I'd love to set you up with a personalized demo. What's your name?";
+    }
+  }
+
+  // Detect "yes" to lead capture offer
+  if (['yes', 'yeah', 'yep', 'sure', 'ok', 'absolutely', 'let\'s do it'].includes(lower) && !leadStep && messageCount >= 3 && !leadCaptured) {
+    leadStep = 1;
+    return "Awesome! Let's get you set up with a demo. First, what's your name? 😊";
+  }
+
+  // Handle vague follow-ups
   if (!topic && lastTopic && messageCount > 1) {
-    // Vague follow-up like "yes", "ok", "more", "tell me more"
-    const vagueWords = ['yes', 'yeah', 'yep', 'ok', 'sure', 'more', 'tell me more', 'go on', 'continue', 'explain', 'details', 'interesting'];
-    const lower = msg.toLowerCase().trim();
-    if (vagueWords.some(w => lower === w || lower.startsWith(w + ' ') || lower.endsWith(' ' + w))) {
+    const vagueWords = ['yes', 'yeah', 'yep', 'ok', 'sure', 'more', 'tell me more', 'go on', 'continue', 'explain', 'details', 'interesting', 'nice', 'cool', 'great', 'awesome'];
+    if (vagueWords.includes(lower)) {
       const responses = [
-        `Sure thing! Let me give you more details about ${lastTopic}. ${getRandomItem(topics[lastTopic].responses)}`,
-        `Absolutely! Here's a bit more: ${getRandomItem(topics[lastTopic].responses)}`,
-        `Great, diving deeper! ${getRandomItem(topics[lastTopic].responses)}`
+        `Sure! Here's more about ${lastTopic}: ${getRandomItem(topics[lastTopic]?.responses || ["I'd be happy to help with that!"])}`,
+        `Absolutely! ${getRandomItem(topics[lastTopic]?.responses || ["Let me know what you'd like to know more about."])}`,
+        `Great, diving deeper! ${getRandomItem(topics[lastTopic]?.responses || ["What else can I tell you?"])}`
       ];
       return getRandomItem(responses);
     }
   }
-  
-  // Get response for detected topic
-  if (topic) {
-    lastTopic = topic;
-    conversationHistory.push({ role: 'user', msg, topic });
-    return getRandomItem(topics[topic].responses);
-  }
-  
-  // Handle common short messages
-  const lower = msg.toLowerCase().trim();
-  if (['yes', 'yeah', 'yep', 'sure', 'ok', 'okay'].includes(lower)) {
-    return "Awesome! What would you like to know more about? I can tell you about our features, pricing, how to get started, or anything else. 😊";
-  }
+
+  // Short message handling
   if (['no', 'nah', 'nope', 'not really'].includes(lower)) {
-    return "No worries at all! If you change your mind or have other questions, I'm always here. Anything else I can help with? 😊";
+    return "No worries! If you have other questions, I'm here. What else can I help with? 😊";
   }
-  if (['thanks', 'thank you', 'thx'].includes(lower)) {
+  if (['thanks', 'thank you', 'thx', 'appreciate it'].includes(lower)) {
     return getRandomItem(topics.goodbye.responses);
   }
   if (['?', 'what', 'how', 'why', 'when', 'where', 'who'].includes(lower)) {
-    return "Good question! 😄 I can help with info about our services, pricing, how to get started, integrations, and more. What specifically would you like to know?";
+    return "Good question! 😄 I can help with features, pricing, how to get started, integrations, and more. What specifically?";
   }
-  
-  // Context-aware fallback
+
+  // Topic response
+  if (topic) {
+    lastTopic = topic;
+    conversationHistory.push({ role: 'user', msg, topic });
+    analytics.topicsHandled.add(topic);
+    return getRandomItem(topics[topic].responses);
+  }
+
+  // Smart fallback with context
   conversationHistory.push({ role: 'user', msg, topic: 'unknown' });
-  
+  const recentTopics = [...new Set(conversationHistory.slice(-5).map(h => h.topic).filter(Boolean))];
+
+  let contextHint = '';
+  if (recentTopics.length > 0) {
+    contextHint = `\n\nWe were talking about ${recentTopics.join(', ')} — want to continue on that, or ask about something new?`;
+  }
+
   const fallbacks = [
-    "That's a great question! I'd love to help, but I want to make sure I give you the most accurate answer. Could you tell me a bit more about what you're looking for? For example:\n\n• Are you looking to add chat to your website?\n• Do you have questions about pricing?\n• Want to know how it works?",
-    "Hmm, I want to make sure I help you properly. I'm best at answering questions about:\n\n🔹 Our chat widget features\n🔹 Pricing and plans\n🔹 How to get started\n🔹 Integrations and tech details\n\nWhat would be most useful for you?",
-    "I appreciate the question! While I might not have the perfect answer right away, I can definitely help with:\n\n• Product features and capabilities\n• Pricing and plan details\n• Setup and onboarding\n• Technical integrations\n\nWhat would you like to explore?",
-    "Interesting! I want to give you the best possible answer. Could you rephrase that or tell me more about what you need? In the meantime, I can help with anything about ChatFlow — features, pricing, setup, you name it! 😊"
+    `That's a great question! I want to give you the best answer.${contextHint}\n\nI'm best at:\n🔹 Features & capabilities\n🔹 Pricing & plans\n🔹 How to get started\n🔹 Integrations & tech\n\nWhat would be most useful?`,
+    `Hmm, I want to help properly.${contextHint}\n\nI can answer questions about our chat widgets, pricing, setup, integrations, and more. What's on your mind?`,
+    `Interesting question! While I work on the perfect answer, here's what I know best:\n\n• Product features\n• Pricing details\n• Setup & onboarding\n• Technical integrations${contextHint}\n\nWhat would you like to explore?`,
+    `I appreciate the question! Let me help you best I can.${contextHint}\n\nYou can ask me about:\n🔹 How ChatFlow works\n🔹 Our pricing plans\n🔹 Getting started\n🔹 Integrations\n\nWhat would you like to know?`
   ];
-  
+
   return getRandomItem(fallbacks);
 }
 
+// ==================== SUGGESTIONS ====================
 function getSuggestions(topic) {
   return followUpSuggestions[topic] || ["What services do you offer?", "How much does it cost?", "How do I get started?"];
 }
 
 function updateSuggestions(topic) {
-  // Remove old suggestions
   const existing = chatMessages.querySelectorAll('.msg-suggestions');
   existing.forEach(el => el.remove());
-  
-  // Get new suggestions for this topic
+
   const suggestions = getSuggestions(topic);
-  
-  // Find last bot message
   const botMessages = chatMessages.querySelectorAll('.bot-message');
   const lastBot = botMessages[botMessages.length - 1];
   if (!lastBot) return;
-  
+
   const bubble = lastBot.querySelector('.msg-bubble');
   const div = document.createElement('div');
   div.className = 'msg-suggestions';
@@ -329,7 +477,7 @@ function updateSuggestions(topic) {
   bubble.appendChild(div);
 }
 
-// ==================== ADD MESSAGE ====================
+// ==================== MESSAGES ====================
 function addMessage(text, isUser = false) {
   const div = document.createElement('div');
   if (isUser) {
@@ -346,7 +494,6 @@ function addMessage(text, isUser = false) {
   chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-// Typing indicator
 function showTyping() {
   const div = document.createElement('div');
   div.className = 'typing-msg';
@@ -361,7 +508,37 @@ function hideTyping() {
   if (t) t.remove();
 }
 
-// ==================== SEND MESSAGE ====================
+// ==================== ANALYTICS ====================
+function startAnalytics() {
+  if (!analytics.startTime) analytics.startTime = Date.now();
+  updateAnalyticsBar();
+}
+
+function updateAnalyticsBar() {
+  let bar = document.getElementById('analyticsBar');
+  if (!bar) {
+    bar = document.createElement('div');
+    bar.id = 'analyticsBar';
+    bar.style.cssText = `
+      padding: 8px 16px;
+      background: rgba(99,102,241,0.05);
+      border-top: 1px solid rgba(255,255,255,0.04);
+      display: flex; justify-content: space-around;
+      font-size: 0.7rem; color: rgba(255,255,255,0.4);
+    `;
+    chatPanel.insertBefore(bar, chatPanel.querySelector('.chatbot-input'));
+  }
+  const elapsed = analytics.startTime ? Math.round((Date.now() - analytics.startTime) / 1000) : 0;
+  const topics = analytics.topicsHandled.size;
+  bar.innerHTML = `
+    <span>💬 ${messageCount} messages</span>
+    <span>📊 ${topics} topics</span>
+    <span>⚡ ~${analytics.avgResponseMs}ms</span>
+    <span>🕐 ${elapsed}s</span>
+  `;
+}
+
+// ==================== SEND ====================
 function sendMessage() {
   const msg = chatInput.value.trim();
   if (!msg) return;
@@ -369,19 +546,23 @@ function sendMessage() {
   chatInput.value = '';
   chatInput.focus();
 
-  // Show typing
   showTyping();
 
-  // Simulate AI thinking (faster for follow-ups, slightly longer for new topics)
-  const delay = 600 + Math.random() * 1000;
+  const responseStart = performance.now();
+  const delay = 500 + Math.random() * 800;
   setTimeout(() => {
     hideTyping();
+    const responseTime = Math.round(performance.now() - responseStart + delay);
+    analytics.avgResponseMs = Math.round((analytics.avgResponseMs + responseTime) / 2);
+
     const response = getAIResponse(msg);
     addMessage(response);
-    
-    // Update suggestions based on detected topic
+
     const detectedTopic = detectTopic(msg) || lastTopic || 'greeting';
-    setTimeout(() => updateSuggestions(detectedTopic), 100);
+    setTimeout(() => {
+      updateSuggestions(detectedTopic);
+      updateAnalyticsBar();
+    }, 100);
   }, delay);
 }
 
@@ -404,11 +585,9 @@ const colorInput = document.getElementById('widgetColor');
 
 if (positionSelect) {
   positionSelect.addEventListener('change', () => {
-    const widget = document.getElementById('chatbot');
-    widget.classList.toggle('left', positionSelect.value === 'left');
+    document.getElementById('chatbot').classList.toggle('left', positionSelect.value === 'left');
   });
 }
-
 if (colorInput) {
   colorInput.addEventListener('input', () => {
     document.documentElement.style.setProperty('--primary', colorInput.value);
