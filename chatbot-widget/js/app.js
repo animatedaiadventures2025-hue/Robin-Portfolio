@@ -52,7 +52,7 @@ let currentLanguage = 'en';
 
 // ==================== LANGUAGES ====================
 const greetings = {
-  en: "Hi there! 👋 I'm your AI assistant. How can I help you today?",
+  en: "Hi there! 👋 I'm from the support team. How can I help you today?",
   es: "¡Hola! 👋 Soy tu asistente de IA. ¿En qué puedo ayudarte hoy?",
   fr: "Salut ! 👋 Je suis votre assistant IA. Comment puis-je vous aider aujourd'hui ?",
   de: "Hallo! 👋 Ich bin Ihr KI-Assistent. Wie kann ich Ihnen heute helfen?",
@@ -331,6 +331,8 @@ function getRandomItem(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
+const agentIcon = '<svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="14" fill="var(--primary)"/><circle cx="14" cy="10" r="4" fill="#fff"/><path d="M7 23c0-4 3-7 7-7s7 3 7 7" fill="#fff"/></svg>';
+
 // ==================== MAIN RESPONSE ENGINE ====================
 function getAIResponse(msg) {
   const startTime = performance.now();
@@ -486,7 +488,7 @@ function addMessage(text, isUser = false) {
   } else {
     div.className = 'bot-message';
     div.innerHTML = `
-      <div class="msg-avatar">🤖</div>
+      <div class="msg-avatar">${agentIcon}</div>
       <div class="msg-bubble"><p>${text.replace(/\n/g, '<br>')}</p></div>
     `;
   }
@@ -498,7 +500,7 @@ function showTyping() {
   const div = document.createElement('div');
   div.className = 'typing-msg';
   div.id = 'typingIndicator';
-  div.innerHTML = `<div class="msg-avatar">🤖</div><div class="typing-dots"><span></span><span></span><span></span></div>`;
+  div.innerHTML = `<div class="msg-avatar">${agentIcon}</div><div class="typing-dots"><span></span><span></span><span></span></div>`;
   chatMessages.appendChild(div);
   chatMessages.scrollTop = chatMessages.scrollHeight;
 }
