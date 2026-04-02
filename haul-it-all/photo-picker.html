@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Photo Picker — Haul It All</title>
+  <style>
+    body { font-family: Inter, sans-serif; background: #0f172a; color: #e2e8f0; padding: 24px; }
+    h1 { font-size: 1.5rem; margin-bottom: 8px; }
+    h2 { font-size: 1.2rem; color: #22c55e; margin: 32px 0 16px; border-bottom: 1px solid #334155; padding-bottom: 8px; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+    .card { border: 2px solid #334155; border-radius: 12px; overflow: hidden; cursor: pointer; transition: all 0.2s; }
+    .card:hover { border-color: #22c55e; transform: scale(1.02); }
+    .card.selected { border-color: #22c55e; box-shadow: 0 0 20px rgba(34,197,94,0.3); }
+    .card img { width: 100%; height: 160px; object-fit: cover; }
+    .card .label { padding: 8px 12px; font-size: 0.8rem; color: #94a3b8; }
+    .instructions { background: #1e293b; padding: 16px; border-radius: 12px; margin-bottom: 24px; }
+    .instructions code { background: #334155; padding: 2px 8px; border-radius: 4px; }
+  </style>
+</head>
+<body>
+  <h1>Photo Picker for Haul It All</h1>
+  <div class="instructions">
+    <p>Click the best photo for each section. Tell me the ID (e.g., "junk-7464230" or "pexels-6995091") and I'll swap it in.</p>
+  </div>
+
+  <h2>🛋️ Hero — Person carrying furniture/couch out</h2>
+  <div class="grid" id="junk-grid"></div>
+
+  <h2>🔨 Service 1 — Furniture Removal (couch being carried out)</h2>
+  <div class="grid" id="couch-grid"></div>
+
+  <h2>🧱 Service 2 — Construction Debris (clearing rubble/drywall)</h2>
+  <div class="grid" id="demo-grid"></div>
+
+  <h2>♻️ Service 3 — Sorting/Donation (toys, clothes, cookware)</h2>
+  <div class="grid" id="sort-grid"></div>
+
+  <h2>🏡 Service 4 — Estate Cleanout (emptying a room)</h2>
+  <div class="grid" id="estate-grid"></div>
+
+  <h2>📷 About Section — Main photo</h2>
+  <div class="grid" id="about-grid"></div>
+
+  <script>
+    const junk = [
+      { id: 'pexels-junk-7464230', src: 'img/pexels-junk-7464230.jpg' },
+      { id: 'pexels-junk-6585761', src: 'img/pexels-junk-6585761.jpg' },
+      { id: 'pexels-junk-7464725', src: 'img/pexels-junk-7464725.jpg' },
+      { id: 'pexels-junk-5673488', src: 'img/pexels-junk-5673488.jpg' },
+      { id: 'pexels-junk-5025639', src: 'img/pexels-junk-5025639.jpg' },
+      { id: 'pexels-junk-7203727', src: 'img/pexels-junk-7203727.jpg' },
+      { id: 'pexels-junk-4498140', src: 'img/pexels-junk-4498140.jpg' },
+      { id: 'pexels-junk-7513760', src: 'img/pexels-junk-7513760.jpg' },
+      { id: 'pexels-junk-8580814', src: 'img/pexels-junk-8580814.jpg' },
+    ];
+    const demo = [
+      { id: 'pexels-demo-2219024', src: 'img/pexels-demo-2219024.jpg' },
+      { id: 'pexels-demo-5853962', src: 'img/pexels-demo-5853962.jpg' },
+      { id: 'pexels-demo-4513940', src: 'img/pexels-demo-4513940.jpg' },
+      { id: 'pexels-demo-2092058', src: 'img/pexels-demo-2092058.jpg' },
+      { id: 'pexels-demo-6474463', src: 'img/pexels-demo-6474463.jpg' },
+      { id: 'pexels-demo-1216589', src: 'img/pexels-demo-1216589.jpg' },
+      { id: 'pexels-demo-257636', src: 'img/pexels-demo-257636.jpg' },
+      { id: 'pexels-demo-2724749', src: 'img/pexels-demo-2724749.jpg' },
+    ];
+    const sort = [
+      { id: 'pexels-sort-6590920', src: 'img/pexels-sort-6590920.jpg' },
+      { id: 'pexels-sort-6995091', src: 'img/pexels-sort-6995091.jpg' },
+      { id: 'pexels-sort-5705089', src: 'img/pexels-sort-5705089.jpg' },
+      { id: 'pexels-sort-7203786', src: 'img/pexels-sort-7203786.jpg' },
+      { id: 'pexels-sort-4246234', src: 'img/pexels-sort-4246234.jpg' },
+      { id: 'pexels-sort-6195045', src: 'img/pexels-sort-6195045.jpg' },
+      { id: 'pexels-sort-7155969', src: 'img/pexels-sort-7155969.jpg' },
+    ];
+    const other = [
+      { id: 'haul-2', src: 'img/haul-2.jpg' },
+      { id: 'haul-3', src: 'img/haul-3.jpg' },
+      { id: 'haul-4', src: 'img/haul-4.jpg' },
+      { id: 'haul-5', src: 'img/haul-5.jpg' },
+      { id: 'haul-6', src: 'img/haul-6.jpg' },
+      { id: 'haul-7', src: 'img/haul-7.jpg' },
+    ];
+
+    function render(containerId, photos) {
+      const container = document.getElementById(containerId);
+      photos.forEach(p => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `<img src="${p.src}" alt="${p.id}"><div class="label">${p.id}</div>`;
+        card.onclick = () => {
+          container.querySelectorAll('.card').forEach(c => c.classList.remove('selected'));
+          card.classList.add('selected');
+        };
+        container.appendChild(card);
+      });
+    }
+
+    render('junk-grid', [...junk, ...other]);
+    render('couch-grid', [...junk, ...other]);
+    render('demo-grid', demo);
+    render('sort-grid', [...sort, ...other]);
+    render('estate-grid', [...demo, ...other]);
+    render('about-grid', [...junk, ...demo, ...other]);
+  </script>
+</body>
+</html>
