@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jose Tree Care | Chicago Tree Service Experts</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', system-ui, sans-serif; line-height: 1.6; color: #1a2e1a; background: #f4f7f4; }
+    header { background: linear-gradient(135deg, #2d5016 0%, #4a7c23 100%); padding: 1rem 0; position: fixed; width: 100%; top: 0; z-index: 100; }
+    header nav { max-width: 1200px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center; }
+    .logo { color: white; font-size: 1.5rem; font-weight: 700; }
+    .hero { min-height: 70vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 8rem 2rem 4rem; background: linear-gradient(180deg, rgba(45,80,22,0.1) 0%, transparent 100%); position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="10" cy="80" r="40" fill="%232d5016" opacity="0.05"/><circle cx="90" cy="60" r="30" fill="%234a7c23" opacity="0.05"/></svg>'); background-size: 200px; }
+    .hero-content { max-width: 800px; position: relative; z-index: 1; }
+    .hero h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 1rem; color: #1a2e1a; }
+    .hero p { font-size: 1.25rem; color: #3a5a3a; margin-bottom: 2rem; }
+    .hero .cta { background: linear-gradient(135deg, #2d5016 0%, #4a7c23 100%); color: white; padding: 1rem 2.5rem; border: none; border-radius: 50px; font-size: 1.1rem; font-weight: 600; cursor: pointer; text-decoration: none; display: inline-block; transition: transform 0.2s, box-shadow 0.2s; }
+    .hero .cta:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(45,80,22,0.3); }
+    .services { padding: 5rem 2rem; max-width: 1200px; margin: 0 auto; }
+    .services h2 { text-align: center; font-size: 2.5rem; margin-bottom: 3rem; color: #1a2e1a; }
+    .services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+    .service-card { background: white; padding: 2rem; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); transition: transform 0.2s; }
+    .service-card:hover { transform: translateY(-5px); }
+    .service-card h3 { font-size: 1.25rem; margin-bottom: 0.5rem; color: #2d5016; }
+    .service-card p { color: #5a6a5a; font-size: 0.95rem; }
+    .why { background: #1a2e1a; color: white; padding: 5rem 2rem; }
+    .why h2 { text-align: center; font-size: 2.5rem; margin-bottom: 3rem; }
+    .why-grid { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+    .why-item { text-align: center; padding: 1.5rem; }
+    .why-icon { width: 60px; height: 60px; background: rgba(255,255,255,0.1); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem; font-size: 1.5rem; }
+    .why-item h3 { margin-bottom: 0.5rem; }
+    .why-item p { opacity: 0.7; font-size: 0.95rem; }
+    .contact { padding: 5rem 2rem; max-width: 800px; margin: 0 auto; text-align: center; }
+    .contact h2 { font-size: 2.5rem; margin-bottom: 1rem; color: #1a2e1a; }
+    .contact p { color: #5a6a5a; margin-bottom: 2rem; }
+    .contact-phone { font-size: 2rem; font-weight: 700; color: #2d5016; text-decoration: none; }
+    .contact-phone:hover { text-decoration: underline; }
+    footer { background: #e8f0e8; padding: 2rem; text-align: center; color: #5a6a5a; font-size: 0.9rem; }
+    .badge { display: inline-block; background: #4a7c23; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; margin-left: 0.5rem; vertical-align: middle; }
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.5rem; }
+      .hero p { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="logo">Jose Tree Care <span class="badge">LLC</span></div>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Expert Tree Care in Chicago</h1>
+      <p>Professional tree trimming, removal, and stump grinding services. Keeping Chicago's trees healthy and properties safe.</p>
+      <a href="tel:773-600-0797" class="cta">Call (773) 600-0797</a>
+    </div>
+  </section>
+
+  <section class="services">
+    <h2>Our Services</h2>
+    <div class="services-grid">
+      <div class="service-card">
+        <h3>🌲 Tree Trimming & Pruning</h3>
+        <p>Improve tree health and shape with professional trimming. We remove dead branches and shape for aesthetics.</p>
+      </div>
+      <div class="service-card">
+        <h3>🪓 Tree Removal</h3>
+        <p>Safe removal of dead, diseased, or dangerous trees. Full cleanup included — we leave your property clean.</p>
+      </div>
+      <div class="service-card">
+        <h3>🪵 Stump Grinding</h3>
+        <p>Remove tree stumps quickly and completely. We grind down to below ground level and fill the hole.</p>
+      </div>
+      <div class="service-card">
+        <h3>🌿 Tree Health Care</h3>
+        <p>Disease diagnosis and treatment. Fertilization, pest management, and preservation services.</p>
+      </div>
+      <div class="service-card">
+        <h3>🌪️ Storm Damage Cleanup</h3>
+        <p>Emergency cleanup after storms. We remove fallen trees and debris quickly and safely.</p>
+      </div>
+      <div class="service-card">
+        <h3>🏡 Land Clearing</h3>
+        <p>Brush removal and lot clearing for construction. We clear the way for your project.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="why">
+    <h2>Why Choose Jose Tree Care?</h2>
+    <div class="why-grid">
+      <div class="why-item">
+        <div class="why-icon">✓</div>
+        <h3>Licensed & Insured</h3>
+        <p>Fully certified tree service</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">✓</div>
+        <h3>ISA Certified Arborists</h3>
+        <p>Professional tree care experts</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">✓</div>
+        <h3>Free Estimates</h3>
+        <p>No obligation quotes</p>
+      </div>
+      <div class="why-item">
+        <div class="why-icon">✓</div>
+        <h3>Same-Day Quotes</h3>
+        <p>Fast response, fast service</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact">
+    <h2>Your Trees Deserve Expert Care</h2>
+    <p>Serving Chicago and all surrounding suburbs. Emergency services available.</p>
+    <a href="tel:773-600-0797" class="contact-phone">(773) 600-0797</a>
+  </section>
+
+  <footer>
+    <p>Jose Tree Care LLC | Chicago, IL | Licensed & Insured | ISA Certified</p>
+  </footer>
+</body>
+</html>
