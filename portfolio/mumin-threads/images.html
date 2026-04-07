@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Images | Mumin Threads</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1B4332;
+            --secondary: #2D6A4F;
+            --accent: #D4A373;
+            --gold: #B8860B;
+            --cream: #FEFAE0;
+            --white: #FFFFFF;
+            --light-bg: #F8F9FA;
+            --text: #333333;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: var(--light-bg); color: var(--text); line-height: 1.6; }
+        
+        /* Navigation */
+        .navbar { background: var(--white); box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: var(--primary); font-weight: 700; font-size: 1.5rem; }
+        .logo-icon { font-size: 2rem; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: var(--text); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+        .hamburger span { width: 25px; height: 3px; background: var(--primary); }
+        
+        @media (max-width: 768px) {
+            .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: white; padding: 1rem; }
+            .nav-links.active { display: flex; }
+            .hamburger { display: flex; }
+        }
+        
+        /* Main Content */
+        .container { max-width: 1200px; margin: 0 auto; padding: 3rem 2rem; }
+        .page-title { text-align: center; margin-bottom: 3rem; }
+        .page-title h1 { color: var(--primary); font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .page-title p { color: #666; }
+        
+        /* Category */
+        .category { margin-bottom: 3rem; }
+        .category h2 { color: var(--primary); margin-bottom: 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--accent); }
+        
+        /* Image Options Grid */
+        .options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
+        .option-card { background: var(--white); border-radius: 15px; padding: 1.5rem; text-align: center; box-shadow: 0 3px 15px rgba(0,0,0,0.08); transition: transform 0.3s; cursor: pointer; border: 3px solid transparent; }
+        .option-card:hover { transform: translateY(-3px); }
+        .option-card.selected { border-color: var(--primary); }
+        .option-preview { width: 100%; height: 150px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 4rem; }
+        .option-card h4 { color: var(--primary); margin-bottom: 0.3rem; font-size: 1rem; }
+        .option-card p { color: #666; font-size: 0.85rem; }
+        
+        /* Gradient backgrounds */
+        .grad-white { background: linear-gradient(135deg, #f5f5f5, #e0e0e0); }
+        .grad-navy { background: linear-gradient(135deg, #1a365d, #2c5282); }
+        .grad-gold { background: linear-gradient(135deg, #D4A373, #B8860B); }
+        .grad-green { background: linear-gradient(135deg, #2D6A4F, #40916C); }
+        .grad-black { background: linear-gradient(135deg, #1a1a1a, #333); }
+        .grad-pink { background: linear-gradient(135deg, #f8b4c4, #f687b3); }
+        
+        /* Footer */
+        footer { background: var(--primary); color: var(--white); padding: 2rem; text-align: center; margin-top: 3rem; }
+        footer a { color: var(--white); text-decoration: none; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">☾</div>
+                <span>Mumin Threads</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html#shop">Shop</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="logos.html">Logos</a></li>
+                <li><a href="images.html">Images</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('active')">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="page-title">
+            <h1>📸 Product Image Options</h1>
+            <p>Choose images for your products (excluding T-Shirts)</p>
+        </div>
+        
+        <!-- Boys Thobes -->
+        <div class="category">
+            <h2>👔 Boys Thobes</h2>
+            <div class="options-grid">
+                <div class="option-card">
+                    <div class="option-preview grad-white">👔</div>
+                    <h4>Option 1: White Thobe</h4>
+                    <p>Classic white emoji</p>
+                </div>
+                <div class="option-card">
+                    <div class="option-preview grad-navy">👔</div>
+                    <h4>Option 2: Navy Thobe</h4>
+                    <p>Navy blue emoji</p>
+                </div>
+                <div class="option-card">
+                    <div class="option-preview grad-gold">🕌</div>
+                    <h4>Option 3: Eid Thobe</h4>
+                    <p>Masque icon</p>
+                </div>
+                <div class="option-card">
+                    <div class="option-preview grad-green">🌙</div>
+                    <h4>Option 4: Pajamas</h4>
+                    <p>Moon icon</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Girls Abayas -->
+        <div class="category">
+            <h2>👗 Girls Abayas & Dresses</h2>
+            <div class="options-grid">
+                <div class="option-card">
+                    <div class="option-preview grad-black">👗</div>
+                    <h4>Option 1: Black Abaya</h4>
+                    <p>Dress emoji</p>
+                </div>
+                <div class="option-card">
+                    <div class="option-preview grad-pink">👗</div>
+                    <h4>Option 2: Pink Abaya</h4>
+                    <p>Pink dress emoji</p>
+                </div>
+                <div class="option-card">
+                    <div class="option-preview grad-green">🕋</div>
+                    <h4>Option 3: Prayer Dress</h4>
+                    <p>Kaaba icon</p>
+                </div>
+                <div class="option-card">
+                    <div class="option-preview grad-gold">🧕</div>
+                    <h4>Option 4: Hijab Pack</h4>
+                    <p>Hijab emoji</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Family Matching -->
+        <div class="category">
+            <h2>👨‍👩‍👧‍👦 Family Matching</h2>
+            <div class="options-grid">
+                <div class="option-card">
+                    <div class="option-preview grad-green">👨‍👩‍👧</div>
+                    <h4>Option 1: Family</h4>
+                    <p>Family emoji</p>
+                </div>
+                <div class="option-card">
+                    <div class="option-preview grad-gold">🏠</div>
+                    <h4>Option 2: Home</h4>
+                    <p>House icon</p>
+                </div>
+                <div class="option-card">
+                    <div class="option-preview grad-navy">💕</div>
+                    <h4>Option 3: Love</h4>
+                    <p>Heart emoji</p>
+                </div>
+                <div class="option-card">
+                    <div class="option-preview grad-white">☪</div>
+                    <h4>Option 4: Star & Crescent</h4>
+                    <p>Islamic symbol</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Mumin Threads. All rights reserved.</p>
+        <p><a href="index.html">← Back to Store</a></p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
