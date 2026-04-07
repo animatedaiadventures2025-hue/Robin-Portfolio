@@ -51,20 +51,18 @@
         
         /* Image Options Grid */
         .options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; }
-        .option-card { background: var(--white); border-radius: 15px; padding: 1.5rem; text-align: center; box-shadow: 0 3px 15px rgba(0,0,0,0.08); transition: transform 0.3s; cursor: pointer; border: 3px solid transparent; }
+        .option-card { background: var(--white); border-radius: 15px; padding: 1rem; text-align: center; box-shadow: 0 3px 15px rgba(0,0,0,0.08); transition: transform 0.3s; cursor: pointer; border: 3px solid transparent; }
         .option-card:hover { transform: translateY(-3px); }
         .option-card.selected { border-color: var(--primary); }
-        .option-preview { width: 100%; height: 150px; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; font-size: 4rem; }
-        .option-card h4 { color: var(--primary); margin-bottom: 0.3rem; font-size: 1rem; }
-        .option-card p { color: #666; font-size: 0.85rem; }
+        .option-preview { width: 100%; height: 180px; border-radius: 10px; overflow: hidden; margin-bottom: 1rem; background: #eee; }
+        .option-preview img { width: 100%; height: 100%; object-fit: cover; }
+        .option-card h4 { color: var(--primary); margin-bottom: 0.3rem; font-size: 0.95rem; }
+        .option-card p { color: #666; font-size: 0.8rem; }
         
-        /* Gradient backgrounds */
-        .grad-white { background: linear-gradient(135deg, #f5f5f5, #e0e0e0); }
-        .grad-navy { background: linear-gradient(135deg, #1a365d, #2c5282); }
-        .grad-gold { background: linear-gradient(135deg, #D4A373, #B8860B); }
-        .grad-green { background: linear-gradient(135deg, #2D6A4F, #40916C); }
-        .grad-black { background: linear-gradient(135deg, #1a1a1a, #333); }
-        .grad-pink { background: linear-gradient(135deg, #f8b4c4, #f687b3); }
+        /* Upload Section */
+        .upload-section { background: var(--white); border-radius: 20px; padding: 2rem; margin-top: 3rem; text-align: center; }
+        .upload-section h2 { color: var(--primary); margin-bottom: 1rem; }
+        .upload-section p { color: #666; margin-bottom: 1.5rem; }
         
         /* Footer */
         footer { background: var(--primary); color: var(--white); padding: 2rem; text-align: center; margin-top: 3rem; }
@@ -96,7 +94,7 @@
     <div class="container">
         <div class="page-title">
             <h1>📸 Product Image Options</h1>
-            <p>Choose images for your products (excluding T-Shirts)</p>
+            <p>Select or upload real photos for your products (T-Shirts already have images)</p>
         </div>
         
         <!-- Boys Thobes -->
@@ -104,24 +102,32 @@
             <h2>👔 Boys Thobes</h2>
             <div class="options-grid">
                 <div class="option-card">
-                    <div class="option-preview grad-white">👔</div>
+                    <div class="option-preview">
+                        <img src="https://placehold.co/400x400/1a365d/FFFFFF?text=White+Thobe" alt="White Thobe">
+                    </div>
                     <h4>Option 1: White Thobe</h4>
-                    <p>Classic white emoji</p>
+                    <p>Classic white traditional</p>
                 </div>
                 <div class="option-card">
-                    <div class="option-preview grad-navy">👔</div>
+                    <div class="option-preview">
+                        <img src="https://placehold.co/400x400/1a365d/FFFFFF?text=Navy+Thobe" alt="Navy Thobe">
+                    </div>
                     <h4>Option 2: Navy Thobe</h4>
-                    <p>Navy blue emoji</p>
+                    <p>Deep blue premium</p>
                 </div>
                 <div class="option-card">
-                    <div class="option-preview grad-gold">🕌</div>
+                    <div class="option-preview">
+                        <img src="https://placehold.co/400x400/D4A373/FFFFFF?text=Eid+Thobe" alt="Eid Thobe">
+                    </div>
                     <h4>Option 3: Eid Thobe</h4>
-                    <p>Masque icon</p>
+                    <p>Gold special edition</p>
                 </div>
                 <div class="option-card">
-                    <div class="option-preview grad-green">🌙</div>
-                    <h4>Option 4: Pajamas</h4>
-                    <p>Moon icon</p>
+                    <div class="option-preview">
+                        <img src="https://placehold.co/400x400/2D6A4F/FFFFFF?text=Pajamas" alt="Pajamas">
+                    </div>
+                    <h4>Option 4: Islamic Pajamas</h4>
+                    <p>Comfortable casual</p>
                 </div>
             </div>
         </div>
@@ -131,24 +137,32 @@
             <h2>👗 Girls Abayas & Dresses</h2>
             <div class="options-grid">
                 <div class="option-card">
-                    <div class="option-preview grad-black">👗</div>
+                    <div class="option-preview">
+                        <img src="https://placehold.co/400x400/1a1a1a/FFFFFF?text=Black+Abaya" alt="Black Abaya">
+                    </div>
                     <h4>Option 1: Black Abaya</h4>
-                    <p>Dress emoji</p>
+                    <p>Classic modest</p>
                 </div>
                 <div class="option-card">
-                    <div class="option-preview grad-pink">👗</div>
+                    <div class="option-preview">
+                        <img src="https://placehold.co/400x400/f8b4c4/FFFFFF?text=Pink+Abaya" alt="Pink Abaya">
+                    </div>
                     <h4>Option 2: Pink Abaya</h4>
-                    <p>Pink dress emoji</p>
+                    <p>Soft colorful</p>
                 </div>
                 <div class="option-card">
-                    <div class="option-preview grad-green">🕋</div>
+                    <div class="option-preview">
+                        <img src="https://placehold.co/400x400/1B4332/FFFFFF?text=Prayer+Dress" alt="Prayer Dress">
+                    </div>
                     <h4>Option 3: Prayer Dress</h4>
-                    <p>Kaaba icon</p>
+                    <p>Ramadan special</p>
                 </div>
                 <div class="option-card">
-                    <div class="option-preview grad-gold">🧕</div>
-                    <h4>Option 4: Hijab Pack</h4>
-                    <p>Hijab emoji</p>
+                    <div class="option-preview">
+                        <img src="https://placehold.co/400x400/D4A373/FFFFFF?text=Hijab+Pack" alt="Hijab Pack">
+                    </div>
+                    <h4>Option 4: Kids Hijab (3-Pack)</h4>
+                    <p>Variety pack</p>
                 </div>
             </div>
         </div>
@@ -158,26 +172,41 @@
             <h2>👨‍👩‍👧‍👦 Family Matching</h2>
             <div class="options-grid">
                 <div class="option-card">
-                    <div class="option-preview grad-green">👨‍👩‍👧</div>
-                    <h4>Option 1: Family</h4>
-                    <p>Family emoji</p>
+                    <div class="option-preview">
+                        <img src="https://placehold.co/400x400/2D6A4F/FFFFFF?text=Family+Set" alt="Family Set">
+                    </div>
+                    <h4>Option 1: Family Matching Set</h4>
+                    <p>Green theme</p>
                 </div>
                 <div class="option-card">
-                    <div class="option-preview grad-gold">🏠</div>
-                    <h4>Option 2: Home</h4>
-                    <p>House icon</p>
+                    <div class="option-preview">
+                        <img src="https://placehold.co/400x400/D4A373/FFFFFF?text=Eid+Family" alt="Eid Family">
+                    </div>
+                    <h4>Option 2: Eid Family Set</h4>
+                    <p>Gold theme</p>
                 </div>
                 <div class="option-card">
-                    <div class="option-preview grad-navy">💕</div>
-                    <h4>Option 3: Love</h4>
-                    <p>Heart emoji</p>
+                    <div class="option-preview">
+                        <img src="https://placehold.co/400x400/1a365d/FFFFFF?text=Dad+Son+Set" alt="Dad Son">
+                    </div>
+                    <h4>Option 3: Dad & Son Set</h4>
+                    <p>Navy theme</p>
                 </div>
                 <div class="option-card">
-                    <div class="option-preview grad-white">☪</div>
-                    <h4>Option 4: Star & Crescent</h4>
-                    <p>Islamic symbol</p>
+                    <div class="option-preview">
+                        <img src="https://placehold.co/400x400/f8b4c4/FFFFFF?text=Mom+Daughter" alt="Mom Daughter">
+                    </div>
+                    <h4>Option 4: Mom & Daughter Set</h4>
+                    <p>Pink theme</p>
                 </div>
             </div>
+        </div>
+        
+        <!-- Upload Your Own -->
+        <div class="upload-section">
+            <h2>📁 Upload Your Own Photos</h2>
+            <p>Have real product photos? Upload them for a custom look!</p>
+            <p style="color: var(--accent);">Coming soon - Contact us to submit your product photos</p>
         </div>
     </div>
 
