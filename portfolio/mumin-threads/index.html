@@ -444,6 +444,13 @@
             .about-grid { grid-template-columns: 1fr; }
             .newsletter input { width: 100%; }
         }
+        
+        /* Lightbox */
+        .lightbox { display: none; position: fixed; z-index: 9999; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); justify-content: center; align-items: center; }
+        .lightbox.active { display: flex; }
+        .lightbox img { max-width: 90%; max-height: 90%; border-radius: 10px; }
+        .lightbox-close { position: absolute; top: 20px; right: 30px; color: white; font-size: 40px; cursor: pointer; }
+        .product-image { cursor: pointer; }
     </style>
 </head>
 <body>
@@ -810,6 +817,31 @@
                 navLinks.style.boxShadow = '0 4px 10px rgba(0,0,0,0.1)';
             });
         }
+        
+        // Lightbox
+        function openLightbox(src) {
+            const lightbox = document.getElementById('lightbox');
+            const img = document.getElementById('lightbox-img');
+            img.src = src;
+            lightbox.classList.add('active');
+        }
+        
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+        
+        // Add click handlers to product images
+        document.querySelectorAll('.product-image img').forEach(img => {
+            img.addEventListener('click', function() {
+                openLightbox(this.src);
+            });
+        });
     </script>
+    
+    <!-- Lightbox -->
+    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-img" src="" alt="Full Image">
+    </div>
 </body>
 </html>
