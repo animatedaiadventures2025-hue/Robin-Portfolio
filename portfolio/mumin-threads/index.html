@@ -77,10 +77,14 @@
         
         .nav-links a {
             font-weight: 500;
+            color: var(--text);
             transition: color 0.3s;
+            text-decoration: none;
         }
         
-        .nav-links a:hover { color: var(--primary); }
+        .nav-links a:hover {
+            color: var(--primary);
+        }
         
         .nav-actions {
             display: flex;
@@ -101,7 +105,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            color: var(--primary);
             transition: all 0.3s;
+            text-decoration: none;
         }
         
         .social-icons a:hover {
@@ -114,6 +120,9 @@
             flex-direction: column;
             gap: 5px;
             cursor: pointer;
+            background: none;
+            border: none;
+            padding: 5px;
         }
         
         .hamburger span {
@@ -595,23 +604,39 @@
     <section class="products">
         <div class="section-title">
             <h2>🔥 Arabic Calligraphy T-Shirts</h2>
-            <p>Trending designs for the whole family</p>
+            <p>Premium quality shirts with trending Islamic designs</p>
         </div>
-        <div class="product-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+        <div class="product-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+            <!-- T-Shirt 1 -->
+            <div class="product-card">
+                <div class="product-image" style="background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);">
+                    <img src="https://img.kwcdn.com/product/fancy/d78913d4-9eb2-4149-ba4f-6d86309d1eeb.jpg?imageView2/2/w/500/q/60/format/webp" alt="Ramadan Shirt" style="width:100%;height:100%;object-fit:cover;">
+                </div>
+                <div class="product-info">
+                    <h4>Ramadan T-Shirt</h4>
+                    <p class="price">$18</p>
+                    <p class="margin">Premium Cotton</p>
+                </div>
+            </div>
+            <!-- T-Shirt 2 -->
+            <div class="product-card">
+                <div class="product-image" style="background: linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%);">
+                    <img src="https://img.kwcdn.com/product/open/120d906448834e2ead713fc73730e96e-goods.jpeg?imageView2/2/w/500/q/60/format/webp" alt="Islamic Shirt" style="width:100%;height:100%;object-fit:cover;">
+                </div>
+                <div class="product-info">
+                    <h4>Islamic Calligraphy Tee</h4>
+                    <p class="price">$18</p>
+                    <p class="margin">Comfort Fit</p>
+                </div>
+            </div>
+            <!-- T3 -->
             <div class="product-card" style="text-align:center;padding:1.5rem;">
                 <div style="font-family:'Amiri',serif;font-size:1.5rem;color:var(--primary);">الحمد لله</div>
                 <p class="price">$18</p>
             </div>
+            <!-- T4 -->
             <div class="product-card" style="text-align:center;padding:1.5rem;">
                 <div style="font-family:'Amiri',serif;font-size:1.5rem;color:var(--primary);">سبحان الله</div>
-                <p class="price">$18</p>
-            </div>
-            <div class="product-card" style="text-align:center;padding:1.5rem;">
-                <div style="font-family:'Amiri',serif;font-size:1.5rem;color:var(--primary);">ما شاء الله</div>
-                <p class="price">$18</p>
-            </div>
-            <div class="product-card" style="text-align:center;padding:1.5rem;">
-                <div style="font-size:1.2rem;color:var(--primary);">Faith over Fear</div>
                 <p class="price">$18</p>
             </div>
         </div>
@@ -732,6 +757,24 @@
             e.preventDefault();
             alert('Thank you for subscribing! 🎉');
         });
+        
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navLinks = document.querySelector('.nav-links');
+        
+        if (hamburger && navLinks) {
+            hamburger.addEventListener('click', function() {
+                navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+                navLinks.style.flexDirection = 'column';
+                navLinks.style.position = 'absolute';
+                navLinks.style.top = '100%';
+                navLinks.style.left = '0';
+                navLinks.style.right = '0';
+                navLinks.style.background = 'white';
+                navLinks.style.padding = '1rem';
+                navLinks.style.boxShadow = '0 4px 10px rgba(0,0,0,0.1)';
+            });
+        }
     </script>
 </body>
 </html>
