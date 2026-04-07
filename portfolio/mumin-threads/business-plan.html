@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Plan | Mumin Threads</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1B4332;
+            --secondary: #2D6A4F;
+            --accent: #D4A373;
+            --gold: #B8860B;
+            --white: #FFFFFF;
+            --light-bg: #F8F9FA;
+            --text: #333333;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: var(--light-bg); color: var(--text); line-height: 1.6; }
+        
+        /* Navigation */
+        .navbar { background: var(--white); box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: var(--primary); font-weight: 700; font-size: 1.5rem; }
+        .logo-icon { display: flex; align-items: center; gap: 3px; background: linear-gradient(135deg, #D4A373, #B8860B); border-radius: 8px; padding: 5px 10px; font-size: 1rem; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: var(--text); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+        
+        /* Main Content */
+        .container { max-width: 1000px; margin: 2rem auto; padding: 2rem; background: var(--white); border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        h1 { color: var(--primary); font-size: 2rem; margin-bottom: 1rem; text-align: center; }
+        h2 { color: var(--primary); font-size: 1.4rem; margin: 2rem 0 1rem; border-bottom: 2px solid var(--accent); padding-bottom: 0.5rem; }
+        h3 { color: var(--secondary); font-size: 1.1rem; margin: 1rem 0 0.5rem; }
+        p { margin-bottom: 1rem; }
+        
+        /* Doc Grid */
+        .doc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 2rem 0; }
+        .doc-card { background: var(--light-bg); border-radius: 15px; padding: 1.5rem; transition: transform 0.3s, box-shadow 0.3s; border: 2px solid transparent; }
+        .doc-card:hover { transform: translateY(-5px); box-shadow: 0 8px 25px rgba(0,0,0,0.1); border-color: var(--accent); }
+        .doc-card h3 { color: var(--primary); margin-bottom: 0.5rem; }
+        .doc-card p { color: #666; font-size: 0.9rem; margin-bottom: 1rem; }
+        .doc-link { display: inline-block; background: var(--primary); color: var(--white); padding: 0.5rem 1rem; border-radius: 8px; text-decoration: none; font-weight: 500; transition: background 0.3s; }
+        .doc-link:hover { background: var(--secondary); }
+        
+        /* Summary Box */
+        .summary-box { background: linear-gradient(135deg, var(--primary), var(--secondary)); color: var(--white); padding: 2rem; border-radius: 15px; margin: 2rem 0; }
+        .summary-box h2 { color: var(--white); border-bottom-color: rgba(255,255,255,0.3); }
+        .summary-box ul { margin: 1rem 0; }
+        .summary-box li { margin-bottom: 0.5rem; }
+        
+        /* Stats */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin: 1rem 0; }
+        .stat-item { background: var(--light-bg); padding: 1rem; border-radius: 10px; text-align: center; }
+        .stat-item strong { display: block; font-size: 1.5rem; color: var(--primary); }
+        .stat-item span { font-size: 0.85rem; color: #666; }
+        
+        /* Footer */
+        footer { background: var(--primary); color: var(--white); padding: 2rem; text-align: center; margin-top: 2rem; }
+        footer a { color: var(--white); text-decoration: none; }
+        
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">
+                    <span>🌙</span>
+                    <span style="font-family:'Amiri',serif;font-size:14px;">مومن</span>
+                    <span>⭐</span>
+                </div>
+                <span>Mumin Threads</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="index.html#shop">Shop</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="business-plan.html">Business Plan</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h1>📋 Mumin Threads Business Plan</h1>
+        <p style="text-align:center;color:#666;">Complete startup roadmap for launching in September 2026</p>
+        
+        <!-- Quick Stats -->
+        <div class="stats-grid">
+            <div class="stat-item">
+                <strong>$2,000</strong>
+                <span>Max Budget</span>
+            </div>
+            <div class="stat-item">
+                <strong>September</strong>
+                <span>Launch Date</span>
+            </div>
+            <div class="stat-item">
+                <strong>USA</strong>
+                <span>Target Market</span>
+            </div>
+            <div class="stat-item">
+                <strong>70%</strong>
+                <span>Success Probability</span>
+            </div>
+        </div>
+        
+        <!-- Research Documents -->
+        <h2>📚 Research Documents</h2>
+        <div class="doc-grid">
+            <div class="doc-card">
+                <h3>📊 Complete Research</h3>
+                <p>Full startup research covering suppliers, pricing, shipping, entities, and financial projections.</p>
+                <a href="research.html" class="doc-link">Read Research →</a>
+            </div>
+            <div class="doc-card">
+                <h3>📈 VC-Optimized Plan</h3>
+                <p>VC perspective on risk analysis, failure prevention, and maximizing success probability.</p>
+                <a href="vc-plan.html" class="doc-link">View VC Plan →</a>
+            </div>
+            <div class="doc-card">
+                <h3>🎯 September Launch</h3>
+                <p>Detailed 5-month preparation timeline leading up to September launch (pre-Ramadan).</p>
+                <a href="september-launch.html" class="doc-link">View Timeline →</a>
+            </div>
+        </div>
+        
+        <!-- Executive Summary -->
+        <div class="summary-box">
+            <h2>📝 Executive Summary</h2>
+            <ul>
+                <li><strong>Product:</strong> Islamic kids clothing (thobes, abayas, pajamas) for ages 2-14</li>
+                <li><strong>Market:</strong> Muslim families in USA, targeting Naperville & Springfield initially</li>
+                <li><strong>Competitive Edge:</strong> Quality Tirupur manufacturing, authentic modest fashion, community focus</li>
+                <li><strong>Budget:</strong> $2,000 maximum startup investment</li>
+                <li><strong>Revenue Target:</strong> $4,000-8,000 profit in Year 1</li>
+                <li><strong>Launch:</strong> September 2026 (pre-Ramadan window)</li>
+            </ul>
+        </div>
+        
+        <!-- Key Milestones -->
+        <h2>🎯 Key Milestones</h2>
+        <table>
+            <tr><th>Month</th><th>Milestone</th></tr>
+            <tr><td>May</td><td>Finalize supplier, order samples</td></tr>
+            <tr><td>June</td><td>Place inventory order (80 units)</td></tr>
+            <tr><td>July</td><td>Setup Shopify, start marketing</td></tr>
+            <tr><td>August</td><td>Ship to USA, test run</td></tr>
+            <tr><td>September</td><td>🚀 Official Launch</td></tr>
+            <tr><td>October</td><td>Ramadan/Eid sales push</td></tr>
+            <tr><td>December</td><td>Evaluate, plan for Year 2</td></tr>
+        </table>
+        
+        <!-- Financial Summary -->
+        <h2>💰 Financial Projections</h2>
+        <table>
+            <tr><th>Item</th><th>Amount</th></tr>
+            <tr><td>Initial Budget</td><td>$2,000</td></tr>
+            <tr><td>Inventory (80 units)</td><td>$600</td></tr>
+            <tr><td>Shipping India→USA</td><td>$200</td></tr>
+            <tr><td>Marketing (Year 1)</td><td>$400</td></tr>
+            <tr><td>Platform & Tools</td><td>$200</td></tr>
+            <tr><td>Reserve Buffer</td><td>$600</td></tr>
+            <tr><td><strong>Year 1 Revenue Target</strong></td><td><strong>$15,000-25,000</strong></td></tr>
+            <tr><td><strong>Year 1 Profit Target</strong></td><td><strong>$4,000-8,000</strong></td></tr>
+        </table>
+        
+        <!-- Next Steps -->
+        <h2>✅ Next Steps (This Week)</h2>
+        <ul>
+            <li>Create Instagram business account</li>
+            <li>Register EIN (free, 15 min)</li>
+            <li>Contact 3-5 Tirupur suppliers via IndiaMART</li>
+            <li>Finalize product selection (start with 3 SKUs)</li>
+            <li>Set budget aside ($2,000 ready)</li>
+        </ul>
+        
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Mumin Threads. All rights reserved.</p>
+        <p><a href="index.html">← Back to Store</a></p>
+    </footer>
+</body>
+</html>
