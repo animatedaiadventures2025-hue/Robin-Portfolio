@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logo Options | Mumin Threads</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #1B4332;
+            --secondary: #2D6A4F;
+            --accent: #D4A373;
+            --gold: #B8860B;
+            --cream: #FEFAE0;
+            --white: #FFFFFF;
+            --light-bg: #F8F9FA;
+            --text: #333333;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Poppins', sans-serif; background: var(--light-bg); color: var(--text); line-height: 1.6; }
+        
+        /* Navigation */
+        .navbar { background: var(--white); box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+        .logo { display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: var(--primary); font-weight: 700; font-size: 1.5rem; }
+        .logo-icon { font-size: 2rem; }
+        .nav-links { display: flex; gap: 2rem; list-style: none; }
+        .nav-links a { color: var(--text); text-decoration: none; font-weight: 500; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+        .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; }
+        .hamburger span { width: 25px; height: 3px; background: var(--primary); }
+        
+        @media (max-width: 768px) {
+            .nav-links { display: none; flex-direction: column; position: absolute; top: 100%; left: 0; right: 0; background: white; padding: 1rem; }
+            .nav-links.active { display: flex; }
+            .hamburger { display: flex; }
+        }
+        
+        /* Main Content */
+        .container { max-width: 1200px; margin: 0 auto; padding: 3rem 2rem; }
+        .page-title { text-align: center; margin-bottom: 3rem; }
+        .page-title h1 { color: var(--primary); font-size: 2.5rem; margin-bottom: 0.5rem; }
+        .page-title p { color: #666; }
+        
+        /* Logo Grid */
+        .logo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+        .logo-card { background: var(--white); border-radius: 20px; padding: 2rem; text-align: center; box-shadow: 0 4px 20px rgba(0,0,0,0.08); transition: transform 0.3s; }
+        .logo-card:hover { transform: translateY(-5px); }
+        .logo-preview { width: 120px; height: 120px; margin: 0 auto 1.5rem; border-radius: 20px; display: flex; align-items: center; justify-content: center; }
+        .logo-card h3 { color: var(--primary); margin-bottom: 0.5rem; }
+        .logo-card p { color: #666; font-size: 0.9rem; }
+        
+        /* Gradient backgrounds */
+        .grad-green { background: linear-gradient(135deg, #1B4332, #2D6A4F); }
+        .grad-gold { background: linear-gradient(135deg, #D4A373, #B8860B); }
+        .grad-cream { background: linear-gradient(135deg, #FEFAE0, #D4A373); }
+        
+        /* Footer */
+        footer { background: var(--primary); color: var(--white); padding: 2rem; text-align: center; margin-top: 3rem; }
+        footer a { color: var(--white); text-decoration: none; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">☾</div>
+                <span>Mumin Threads</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="index.html#shop">Shop</a></li>
+                <li><a href="index.html#about">About</a></li>
+                <li><a href="logos.html">Logos</a></li>
+                <li><a href="index.html#contact">Contact</a></li>
+            </ul>
+            <button class="hamburger" onclick="document.querySelector('.nav-links').classList.toggle('active')">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="page-title">
+            <h1>🎨 Choose Your Logo</h1>
+            <p>Select your favorite brand identity for Mumin Threads</p>
+        </div>
+        
+        <div class="logo-grid">
+            <!-- Option A -->
+            <div class="logo-card">
+                <div class="logo-preview grad-green">
+                    <svg width="60" height="60" viewBox="0 0 100 100">
+                        <path d="M50 15 A35 35 0 1 1 50 85 A35 35 0 1 1 50 15 M50 25 A25 25 0 1 0 50 75 A25 25 0 1 0 50 25" fill="white"/>
+                        <text x="50" y="55" text-anchor="middle" font-size="14" fill="white" font-family="serif">م</text>
+                    </svg>
+                </div>
+                <h3>Option A: Crescent + Letter</h3>
+                <p>Modern minimal design with Arabic letter</p>
+            </div>
+            
+            <!-- Option B -->
+            <div class="logo-card">
+                <div class="logo-preview grad-green">
+                    <svg width="60" height="60" viewBox="0 0 100 100">
+                        <polygon points="50,20 55,40 65,40 57,48 60,58 50,52 40,58 43,48 45,40 50,20" fill="white"/>
+                        <polygon points="50,65 53,58 62,60 55,68 50,62 45,68 47,60 53,58 50,65" fill="white"/>
+                    </svg>
+                </div>
+                <h3>Option B: Star & Crescent</h3>
+                <p>Classic Islamic symbol with stars</p>
+            </div>
+            
+            <!-- Option C -->
+            <div class="logo-card">
+                <div class="logo-preview grad-green">
+                    <span style="font-family:'Amiri',serif;font-size:28px;color:white;">مومن</span>
+                </div>
+                <h3>Option C: Mumin Calligraphy</h3>
+                <p>Arabic wordmark in elegant script</p>
+            </div>
+            
+            <!-- Option D -->
+            <div class="logo-card">
+                <div class="logo-preview grad-green">
+                    <span style="font-size:24px;color:white;font-weight:bold;">MT</span>
+                </div>
+                <h3>Option D: Monogram</h3>
+                <p>Simple initials MT</p>
+            </div>
+            
+            <!-- Option E -->
+            <div class="logo-card">
+                <div class="logo-preview grad-gold">
+                    <span style="font-size:40px;">☪</span>
+                </div>
+                <h3>Option E: Gold Star & Crescent</h3>
+                <p>Premium gold finish version</p>
+            </div>
+            
+            <!-- Option F -->
+            <div class="logo-card">
+                <div class="logo-preview grad-cream">
+                    <span style="font-family:'Amiri',serif;font-size:32px;color:#1B4332;">م</span>
+                </div>
+                <h3>Option F: Cream Letter</h3>
+                <p>Subtle cream background with letter</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 Mumin Threads. All rights reserved.</p>
+        <p><a href="index.html">← Back to Store</a></p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        }
+    </script>
+</body>
+</html>
