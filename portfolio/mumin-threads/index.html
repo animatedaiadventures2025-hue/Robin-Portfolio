@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary: #1B4332;
@@ -19,11 +20,7 @@
             --light-bg: #F8F9FA;
         }
         
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
             font-family: 'Poppins', sans-serif;
@@ -32,81 +29,127 @@
             line-height: 1.6;
         }
         
-        /* Islamic Pattern Background */
-        .pattern-bg {
-            background: 
-                radial-gradient(circle at 20% 80%, rgba(27,67,50,0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(212,163,115,0.08) 0%, transparent 50%),
-                var(--cream);
-        }
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
         
         /* Navigation */
-        nav {
+        .navbar {
+            background: var(--white);
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 5%;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 5%;
-            background: var(--white);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            position: sticky;
-            top: 0;
-            z-index: 100;
         }
         
         .logo {
-            font-family: 'Amiri', serif;
-            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: var(--primary);
         }
         
-        .logo span {
-            color: var(--gold);
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
         }
         
         .nav-links {
             display: flex;
             gap: 2rem;
-            list-style: none;
         }
         
         .nav-links a {
-            text-decoration: none;
-            color: var(--text);
             font-weight: 500;
             transition: color 0.3s;
         }
         
-        .nav-links a:hover {
-            color: var(--primary);
+        .nav-links a:hover { color: var(--primary); }
+        
+        .nav-actions {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
         }
         
-        .cta-btn {
+        .social-icons {
+            display: flex;
+            gap: 0.8rem;
+        }
+        
+        .social-icons a {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--light-bg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        
+        .social-icons a:hover {
             background: var(--primary);
-            color: var(--white) !important;
-            padding: 0.6rem 1.5rem;
-            border-radius: 25px;
-            font-weight: 600;
+            color: var(--white);
         }
         
-        /* Hero Section */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+        }
+        
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            transition: all 0.3s;
+        }
+        
+        /* Hero */
         .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: var(--white);
+            padding: 4rem 5%;
             text-align: center;
-            padding: 4rem 5% 2rem;
-            position: relative;
         }
         
-        .crescent {
-            font-size: 4rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            background: var(--gold);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
         }
         
         .hero h1 {
             font-size: 3rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
+            font-weight: 800;
         }
         
         .hero h1 .arabic {
@@ -116,38 +159,51 @@
         
         .hero p {
             font-size: 1.2rem;
-            color: #666;
-            max-width: 600px;
-            margin: 0 auto 2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
         }
         
-        .hero-cta {
+        .btn {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
-            background: var(--primary);
-            color: var(--white);
-            padding: 1rem 2.5rem;
+            padding: 1rem 2rem;
             border-radius: 30px;
-            font-size: 1.1rem;
             font-weight: 600;
-            text-decoration: none;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
         }
         
-        .hero-cta:hover {
+        .btn-primary {
+            background: var(--white);
+            color: var(--primary);
+        }
+        
+        .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(27,67,50,0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
         
-        /* Products Grid */
+        /* Shipping Banner */
+        .shipping-banner {
+            background: var(--accent);
+            color: var(--white);
+            padding: 0.8rem 5%;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        
+        .shipping-banner span { margin: 0 0.5rem; }
+        
+        /* Products */
         .products {
             padding: 3rem 5%;
         }
         
         .section-title {
             text-align: center;
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
         }
         
         .section-title h2 {
@@ -156,37 +212,20 @@
             margin-bottom: 0.5rem;
         }
         
-        .section-title .subtitle {
-            color: #666;
-        }
-        
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 2rem;
             max-width: 1200px;
             margin: 0 auto;
         }
         
-        /* Boys Section */
-        .category-title {
-            text-align: center;
-            margin: 3rem 0 1.5rem;
-            padding-top: 2rem;
-            border-top: 1px solid #ddd;
-        }
-        
-        .category-title h3 {
-            font-size: 1.5rem;
-            color: var(--primary);
-        }
-        
         .product-card {
             background: var(--white);
-            border-radius: 15px;
+            border-radius: 16px;
             overflow: hidden;
             box-shadow: 0 4px 20px rgba(0,0,0,0.08);
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s;
         }
         
         .product-card:hover {
@@ -195,39 +234,11 @@
         }
         
         .product-image {
-            width: 100%;
             height: 250px;
-            background: var(--light-bg);
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
-            overflow: hidden;
-        }
-        
-        .product-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .product-placeholder {
-            font-size: 4rem;
-            color: var(--secondary);
-        }
-        
-        .img-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .img-grid img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
         }
         
         .product-tag {
@@ -242,18 +253,21 @@
             font-weight: 600;
         }
         
+        .product-icon {
+            font-size: 5rem;
+        }
+        
         .product-info {
             padding: 1.2rem;
         }
         
         .product-info h4 {
             font-size: 1.1rem;
-            color: var(--text);
             margin-bottom: 0.3rem;
         }
         
         .product-info .price {
-            font-size: 1.2rem;
+            font-size: 1.3rem;
             font-weight: 700;
             color: var(--primary);
         }
@@ -263,65 +277,75 @@
             color: #888;
         }
         
-        /* Girls Section */
-        .girls-bg .product-card {
-            border: 2px solid var(--secondary);
-        }
-        
-        /* T-Shirts Section */
-        .tshirt-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        
-        .tshirt-card {
+        /* About Section */
+        .about {
             background: var(--white);
-            border-radius: 12px;
-            padding: 1.5rem;
-            text-align: center;
-            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+            padding: 4rem 5%;
         }
         
-        .tshirt-card .design {
-            font-family: 'Amiri', serif;
-            font-size: 1.3rem;
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: center;
+        }
+        
+        .about-content h2 {
+            font-size: 2rem;
             color: var(--primary);
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
         }
         
-        .tshirt-card .price {
-            font-weight: 600;
-            color: var(--secondary);
+        .about-content p {
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+        
+        .about-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .stat h3 {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+        
+        .stat p {
+            font-size: 0.9rem;
+            color: #666;
         }
         
         /* Features */
         .features {
             background: var(--primary);
             color: var(--white);
-            padding: 3rem 5%;
-            margin-top: 3rem;
+            padding: 4rem 5%;
         }
         
         .features-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 2rem;
-            max-width: 1000px;
+            max-width: 1200px;
             margin: 0 auto;
             text-align: center;
         }
         
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 0.5rem;
+        .feature {
+            padding: 1.5rem;
         }
         
-        .feature h4 {
-            margin-bottom: 0.3rem;
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
         }
+        
+        .feature h4 { margin-bottom: 0.5rem; }
+        .feature p { opacity: 0.8; font-size: 0.9rem; }
         
         /* Newsletter */
         .newsletter {
@@ -361,70 +385,112 @@
         footer {
             background: var(--text);
             color: var(--white);
-            padding: 2rem 5%;
-            text-align: center;
+            padding: 3rem 5% 1.5rem;
         }
         
-        footer p {
-            opacity: 0.8;
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
         
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-        
-        .social-links a {
-            color: var(--white);
+        .footer-brand h3 {
             font-size: 1.5rem;
-            text-decoration: none;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-brand p {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        
+        .footer-links h4 {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+        
+        .footer-links ul li { margin-bottom: 0.5rem; }
+        .footer-links a { opacity: 0.8; font-size: 0.9rem; }
+        .footer-links a:hover { opacity: 1; }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            opacity: 0.6;
+            font-size: 0.85rem;
         }
         
         /* Mobile */
         @media (max-width: 768px) {
+            .nav-links, .nav-actions { display: none; }
+            .hamburger { display: flex; }
             .hero h1 { font-size: 2rem; }
-            .nav-links { display: none; }
-            .product-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
-            .product-image { height: 180px; }
+            .about-grid { grid-template-columns: 1fr; }
+            .newsletter input { width: 100%; }
         }
     </style>
 </head>
 <body>
+
     <!-- Navigation -->
-    <nav>
-        <div class="logo">Mumin <span>Threads</span></div>
-        <ul class="nav-links">
-            <li><a href="#boys">Boys</a></li>
-            <li><a href="#girls">Girls</a></li>
-            <li><a href="#tshirts">T-Shirts</a></li>
-            <li><a href="#contact" class="cta-btn">Shop Now</a></li>
-        </ul>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">☾</div>
+                <span>Mumin Threads</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#shop">Shop</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="nav-actions">
+                <div class="social-icons">
+                    <a href="#" title="Follow on Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" title="Follow on Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" title="Follow on TikTok"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            <button class="hamburger">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
     </nav>
 
     <!-- Hero -->
-    <section class="hero pattern-bg">
-        <div class="crescent">☾</div>
-        <h1>Mumin <span class="arabic">مومن</span> Threads</h1>
-        <p> Faith-Inspired Fashion for Little Ones</p>
-        <p style="font-size: 1rem; color: #888;">Modest & Stylish Islamic Clothing for Kids Ages 2-14</p>
-        <a href="#boys" class="hero-cta">Explore Collection →</a>
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-badge">✨ New Collection Available</div>
+            <h1>Faith-Inspired Fashion <br>for <span class="arabic">صغار</span> Little Ones</h1>
+            <p>Modest, comfortable, and stylish Islamic clothing for kids. Perfect for Eid, prayer, and everyday wear.</p>
+            <a href="#shop" class="btn btn-primary">Shop Now →</a>
+        </div>
     </section>
 
+    <!-- Free Shipping Banner -->
+    <div class="shipping-banner">
+        <span>🚚 Free shipping on orders over $50</span>
+        <span>·</span>
+        <span>🛡️ Quality guaranteed</span>
+        <span>·</span>
+        <span>↩️ Easy returns</span>
+    </div>
+
     <!-- Boys Collection -->
-    <section id="boys" class="products">
+    <section id="shop" class="products">
         <div class="section-title">
             <h2>👦 Boys Collection</h2>
-            <p class="subtitle">Comfortable thobes & pajamas for little muslirs</p>
+            <p>Comfortable thobes & pajamas for little Muslims</p>
         </div>
-        
         <div class="product-grid">
             <!-- B1: White Thobe -->
             <div class="product-card">
                 <div class="product-image" style="background: linear-gradient(135deg, #f5f5f5 0%, #e0e0e0 100%);">
-                    <div class="product-tag">Best Seller</div>
-                    <div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:4rem;">👕</div>
+                    <span class="product-icon">👕</span>
                 </div>
                 <div class="product-info">
                     <h4>Classic White Thobe</h4>
@@ -432,11 +498,10 @@
                     <p class="margin">Ages 4-14 | 100% Cotton</p>
                 </div>
             </div>
-            
             <!-- B2: Navy Thobe -->
             <div class="product-card">
                 <div class="product-image" style="background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);">
-                    <div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:4rem;">👔</div>
+                    <span class="product-icon">👔</span>
                 </div>
                 <div class="product-info">
                     <h4>Navy Blue Thobe</h4>
@@ -444,12 +509,11 @@
                     <p class="margin">Ages 4-14 | Premium Cotton</p>
                 </div>
             </div>
-            
             <!-- B3: Eid Thobe -->
             <div class="product-card">
                 <div class="product-image" style="background: linear-gradient(135deg, #D4A373 0%, #B8860B 100%);">
-                    <div class="product-tag">Eid Special</div>
-                    <div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:4rem;">🕌</div>
+                    <span class="product-tag">Eid Special</span>
+                    <span class="product-icon">🕌</span>
                 </div>
                 <div class="product-info">
                     <h4>Eid Printed Thobe</h4>
@@ -457,12 +521,11 @@
                     <p class="margin">Ages 4-12 | Embroidered</p>
                 </div>
             </div>
-            
             <!-- B4: Islamic Pajamas -->
             <div class="product-card">
                 <div class="product-image" style="background: linear-gradient(135deg, #2D6A4F 0%, #40916C 100%);">
-                    <div class="product-tag">Hot</div>
-                    <div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:4rem;">🌙</div>
+                    <span class="product-tag">Bestseller</span>
+                    <span class="product-icon">🌙</span>
                 </div>
                 <div class="product-info">
                     <h4>Islamic Pajamas</h4>
@@ -474,17 +537,16 @@
     </section>
 
     <!-- Girls Collection -->
-    <section id="girls" class="products" style="background: #f0f4f1;">
+    <section class="products" style="background: #f0f4f1;">
         <div class="section-title">
             <h2>👧 Girls Collection</h2>
-            <p class="subtitle">Modest abayas & prayer dresses for little muslimat</p>
+            <p>Modest abayas & prayer dresses for little Muslims</p>
         </div>
-        
         <div class="product-grid">
             <!-- G1: Black Abaya -->
             <div class="product-card">
                 <div class="product-image" style="background: linear-gradient(135deg, #1a1a1a 0%, #333333 100%);">
-                    <div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:4rem;">👗</div>
+                    <span class="product-icon">👗</span>
                 </div>
                 <div class="product-info">
                     <h4>Classic Black Abaya</h4>
@@ -492,11 +554,10 @@
                     <p class="margin">Ages 4-14 | Flowing</p>
                 </div>
             </div>
-            
             <!-- G2: Color Abaya -->
             <div class="product-card">
                 <div class="product-image" style="background: linear-gradient(135deg, #f8b4c4 0%, #f687b3 100%);">
-                    <div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:4rem;">🌸</div>
+                    <span class="product-icon">🌸</span>
                 </div>
                 <div class="product-info">
                     <h4>Pink/Blue Abaya</h4>
@@ -504,12 +565,11 @@
                     <p class="margin">Ages 4-14 | Soft Colors</p>
                 </div>
             </div>
-            
             <!-- G3: Prayer Dress -->
             <div class="product-card">
                 <div class="product-image" style="background: linear-gradient(135deg, #1B4332 0%, #2D6A4F 100%);">
-                    <div class="product-tag">Ramadan</div>
-                    <div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:4rem;">🕋</div>
+                    <span class="product-tag">Ramadan</span>
+                    <span class="product-icon">🕋</span>
                 </div>
                 <div class="product-info">
                     <h4>Prayer Dress</h4>
@@ -517,11 +577,10 @@
                     <p class="margin">Ages 4-12 | Special</p>
                 </div>
             </div>
-            
             <!-- G4: Hijab Pack -->
             <div class="product-card">
                 <div class="product-image" style="background: linear-gradient(135deg, #2D6A4F 0%, #40916C 100%);">
-                    <div style="display:flex;align-items:center;justify-content:center;height:100%;font-size:4rem;">🧕</div>
+                    <span class="product-icon">🧕</span>
                 </div>
                 <div class="product-info">
                     <h4>Kids Hijab (3-Pack)</h4>
@@ -532,37 +591,56 @@
         </div>
     </section>
 
-    <!-- T-Shirts Collection -->
-    <section id="tshirts" class="products">
+    <!-- T-Shirts -->
+    <section class="products">
         <div class="section-title">
             <h2>🔥 Arabic Calligraphy T-Shirts</h2>
-            <p class="subtitle">Trending designs for the whole family</p>
+            <p>Trending designs for the whole family</p>
         </div>
-        
-        <div class="tshirt-grid">
-            <div class="tshirt-card">
-                <div class="design">الحمد لله</div>
+        <div class="product-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+            <div class="product-card" style="text-align:center;padding:1.5rem;">
+                <div style="font-family:'Amiri',serif;font-size:1.5rem;color:var(--primary);">الحمد لله</div>
                 <p class="price">$18</p>
             </div>
-            <div class="tshirt-card">
-                <div class="design">سبحان الله</div>
+            <div class="product-card" style="text-align:center;padding:1.5rem;">
+                <div style="font-family:'Amiri',serif;font-size:1.5rem;color:var(--primary);">سبحان الله</div>
                 <p class="price">$18</p>
             </div>
-            <div class="tshirt-card">
-                <div class="design">ما شاء الله</div>
+            <div class="product-card" style="text-align:center;padding:1.5rem;">
+                <div style="font-family:'Amiri',serif;font-size:1.5rem;color:var(--primary);">ما شاء الله</div>
                 <p class="price">$18</p>
             </div>
-            <div class="tshirt-card">
-                <div class="design">بسم الله</div>
+            <div class="product-card" style="text-align:center;padding:1.5rem;">
+                <div style="font-size:1.2rem;color:var(--primary);">Faith over Fear</div>
                 <p class="price">$18</p>
             </div>
-            <div class="tshirt-card">
-                <div class="design" style="font-size:1rem;">Faith over Fear</div>
-                <p class="price">$18</p>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="about-grid">
+            <div>
+                <div style="background: linear-gradient(135deg, var(--primary), var(--secondary));width:100%;max-width:400px;height:300px;border-radius:20px;display:flex;align-items:center;justify-content:center;font-size:6rem;">☾</div>
             </div>
-            <div class="tshirt-card">
-                <div class="design">Stay Wudu</div>
-                <p class="price">$15</p>
+            <div class="about-content">
+                <h2>About Mumin Threads</h2>
+                <p>We're a family-owned business dedicated to providing modest, comfortable, and stylish Islamic clothing for children. Our journey began with a simple mission: to help parents dress their little ones in clothing that reflects their faith while keeping them comfortable.</p>
+                <p>Each piece is carefully crafted with quality materials, designed to last through countless washes and playtimes. From everyday thobes to special occasion wear, we've got your little ones covered.</p>
+                <div class="about-stats">
+                    <div class="stat">
+                        <h3>5000+</h3>
+                        <p>Happy Customers</p>
+                    </div>
+                    <div class="stat">
+                        <h3>50+</h3>
+                        <p>Products</p>
+                    </div>
+                    <div class="stat">
+                        <h3>4.9</h3>
+                        <p>Star Rating</p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -571,24 +649,24 @@
     <section class="features">
         <div class="features-grid">
             <div class="feature">
-                <div class="feature-icon">🇮🇳</div>
-                <h4>Sourced from India</h4>
-                <p>Quality Tirupur textiles</p>
+                <div class="feature-icon">🌿</div>
+                <h4>Quality Materials</h4>
+                <p>100% premium cotton, soft on sensitive skin</p>
             </div>
             <div class="feature">
                 <div class="feature-icon">✈️</div>
                 <h4>Fast Shipping</h4>
-                <p>From USA warehouse</p>
+                <p>Delivery within 5-7 business days</p>
             </div>
             <div class="feature">
-                <div class="feature-icon">💙</div>
-                <h4>Modest & Comfortable</h4>
-                <p>Soft, breathable fabric</p>
+                <div class="feature-icon">💬</div>
+                <h4>Community</h4>
+                <p>Join 5000+ Muslim families</p>
             </div>
             <div class="feature">
-                <div class="feature-icon">🎁</div>
-                <h4>Eid Ready</h4>
-                <p>Special occasion wear</p>
+                <div class="feature-icon">🛡️</div>
+                <h4>Quality Guarantee</h4>
+                <p>30-day hassle-free returns</p>
             </div>
         </div>
     </section>
@@ -596,7 +674,7 @@
     <!-- Newsletter -->
     <section class="newsletter" id="contact">
         <h2>📬 Stay Updated</h2>
-        <p>Get notified when we launch & exclusive offers!</p>
+        <p>Get notified about new arrivals and exclusive offers!</p>
         <form>
             <input type="email" placeholder="Enter your email">
             <button type="submit">Subscribe</button>
@@ -605,29 +683,51 @@
 
     <!-- Footer -->
     <footer>
-        <div class="logo" style="color: white; margin-bottom: 1rem;">Mumin <span>Threads</span></div>
-        <p>Faith-Inspired Fashion for Little Ones</p>
-        <p style="font-size: 0.9rem; margin-top: 0.5rem;">Made with ❤️ for the Muslim community</p>
-        <div class="social-links">
-            <a href="#">📷 Instagram</a>
-            <a href="#">📘 Facebook</a>
-            <a href="#">🎵 TikTok</a>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>☾ Mumin Threads</h3>
+                <p>Faith-inspired fashion for little ones. Quality Islamic clothing for children ages 2-14.</p>
+                <div class="social-icons" style="margin-top:1rem;">
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div class="footer-links">
+                <h4>Shop</h4>
+                <ul>
+                    <li><a href="#">Boys</a></li>
+                    <li><a href="#">Girls</a></li>
+                    <li><a href="#">T-Shirts</a></li>
+                    <li><a href="#">New Arrivals</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#">Blog</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">FAQs</a></li>
+                    <li><a href="#">Shipping</a></li>
+                    <li><a href="#">Returns</a></li>
+                    <li><a href="#">Size Guide</a></li>
+                </ul>
+            </div>
         </div>
-        <p style="margin-top: 1.5rem; font-size: 0.8rem;">© 2026 Mumin Threads. All rights reserved.</p>
+        <div class="footer-bottom">
+            <p>© 2026 Mumin Threads. All rights reserved. | Made with ❤️ for the Muslim community</p>
+        </div>
     </footer>
 
     <script>
-        // Simple scroll effect
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-        
-        // Form submission
+        // Simple form submission
         document.querySelector('form').addEventListener('submit', function(e) {
             e.preventDefault();
             alert('Thank you for subscribing! 🎉');
